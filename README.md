@@ -1,6 +1,6 @@
 # job-search-ai
 
-> AI-powered job search skill suite for [Claude Code](https://claude.ai/code). Parse any resume, find matching roles at target companies with real-time TC data, and generate tailored LaTeX PDF resumes — all using your existing Claude Code subscription.
+> AI-powered job search skill suite for [Claude Code](https://claude.ai/code). Parse any resume, find matching roles at target companies with real-time TC data, generate tailored LaTeX PDF resumes, and get deep salary + interview intelligence from Levels.fyi, Glassdoor, Blind, Leetcode Discuss, AmbitionBox, Reddit and more — all using your existing Claude Code subscription.
 
 **No API keys. No servers. No extra cost.**
 
@@ -8,6 +8,7 @@
 /job-profile ~/Downloads/resume.pdf      → extracts your profile
 /job-scan stripe airbnb databricks       → finds open roles + TC data
 /job-resume https://careers.airbnb.com/… → tailored 1-page PDF in 60s
+/job-intel stripe "senior software engineer" → salary + interview intel from 7 portals
 ```
 
 ---
@@ -19,6 +20,7 @@
 | `/job-profile` | Upload any resume (PDF, LinkedIn export) → structured profile stored locally |
 | `/job-scan` | Scans target company career pages (via public APIs) → open roles + TC benchmarks |
 | `/job-resume` | Takes a JD URL or text + your profile → generates a keyword-tailored LaTeX PDF |
+| `/job-intel` | Aggregates salary data + interview process from 7+ portals → structured report |
 
 ### Why Claude Code skills vs a web app?
 
@@ -123,6 +125,30 @@ What happens:
 6. Opens the PDF
 
 Output: `~/.job-search/output/<company>-<role>-<date>.pdf`
+
+---
+
+### `/job-intel` — Salary + interview intelligence
+
+Searches **Levels.fyi, Glassdoor, Blind, Leetcode Discuss, AmbitionBox, Reddit, Naukri** simultaneously and synthesises the results into one report.
+
+```
+/job-intel stripe                              ← full report, all levels
+/job-intel airbnb "senior software engineer"   ← role-specific
+/job-intel uber bangalore                      ← location-specific
+/job-intel databricks --salary-only            ← TC data only
+/job-intel google --interview-only             ← interview process only
+```
+
+Output includes:
+- **Salary table** — base, equity, bonus, total comp by level with real offer examples
+- **Negotiation signals** — where companies move, what levers to pull
+- **Interview rounds breakdown** — number of rounds, type (DSA / system design / behavioural), duration
+- **Topics seen** — DSA patterns, system design questions from recent candidates
+- **Difficulty rating** — aggregated from Glassdoor + community reports
+- **Tips from recent candidates** — what worked, what didn't
+
+Report saved to `~/.job-search/intel/<company>-<date>.md`.
 
 ---
 

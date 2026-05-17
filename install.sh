@@ -43,7 +43,7 @@ echo ""
 # ─── Create directories ────────────────────────────────────────────────────────
 
 info "Creating ~/.job-search/ ..."
-mkdir -p "$JOB_SEARCH_DIR/templates" "$JOB_SEARCH_DIR/output"
+mkdir -p "$JOB_SEARCH_DIR/templates" "$JOB_SEARCH_DIR/output" "$JOB_SEARCH_DIR/intel"
 ok "Directories ready"
 
 # ─── Copy skills ───────────────────────────────────────────────────────────────
@@ -51,7 +51,7 @@ ok "Directories ready"
 info "Installing skills to ~/.claude/skills/ ..."
 mkdir -p "$SKILLS_DIR"
 
-for skill in job-profile job-scan job-resume; do
+for skill in job-profile job-scan job-resume job-intel; do
   src="$SCRIPT_DIR/skills/${skill}.md"
   dst="$SKILLS_DIR/${skill}.md"
   if [ -f "$dst" ]; then
