@@ -1,0 +1,14 @@
+# Generated files — never commit user data
+output/
+*.pdf
+*.log
+*.aux
+*.out
+
+# User config (contains personal data)
+config/user.yml
+~/.job-search/
+
+# OS
+.DS_Store
+Thumbs.db

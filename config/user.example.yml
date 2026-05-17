@@ -1,0 +1,43 @@
+# ~/.job-search/config.yml
+# Your personal job search preferences.
+# Edit this file after running install.sh — it's never overwritten by updates.
+
+target:
+  # Your preferred job location — used to filter roles in /job-scan
+  city: "San Francisco"          # e.g. "Bangalore", "New York", "London", "Remote"
+
+  # Your total compensation goal — shown in scan output for context
+  tc_target: "$200K USD"         # e.g. "1.5 Cr INR", "£120K GBP", "€150K EUR"
+  currency: "USD"                # USD, INR, EUR, GBP, SGD, AED, etc.
+
+  # Seniority levels to include in role scanning
+  role_levels:
+    - Senior
+    - Staff
+    - Principal
+    - Lead
+
+  # Job title keywords — roles must contain at least one of these
+  role_keywords:
+    - Software Engineer
+    - SWE
+    - Full Stack Engineer
+    - Backend Engineer
+    - Platform Engineer
+
+  # Keywords that disqualify a role (never surface these)
+  exclude_keywords:
+    - Intern
+    - Junior
+    - Graduate
+    - Manager       # remove if you're open to EM roles
+    - Sales
+    - Recruiter
+
+resume:
+  # Default LaTeX template to use when running /job-resume without --template flag
+  # Options: "jake" (Jake's Resume style) or "classic" (compact single-column)
+  default_template: "jake"
+
+  # Maximum pages for generated resume (almost always 1 for ICs)
+  max_pages: 1

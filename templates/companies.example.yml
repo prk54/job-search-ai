@@ -1,0 +1,188 @@
+# ~/.job-search/companies.yml
+# Your target companies for /job-scan.
+# Copy this file from templates/companies.example.yml and customise — it's never overwritten by updates.
+#
+# api values:
+#   greenhouse  → uses boards-api.greenhouse.io/v1/boards/<api_slug>/jobs
+#   ashby       → uses api.ashbyhq.com/posting-api/job-board/<api_slug>
+#   lever       → uses api.lever.co/v0/postings/<api_slug>
+#   null        → Puppeteer scrapes the careers_url directly
+#
+# tier values:
+#   1           → apply first (highest TC / best fit)
+#   2           → apply with competing offers
+#   3           → monitor / target senior levels only
+#   practice    → interview reps, TC not the goal
+
+companies:
+
+  # ── Tier 1 examples ───────────────────────────────────────────────────────────
+
+  - name: Stripe
+    careers_url: https://stripe.com/jobs
+    api: greenhouse
+    api_slug: stripe
+    tc_range: "$180–280K"
+    tier: 1
+    notes: "Search India team is a strong fit for data/search platform engineers"
+
+  - name: Airbnb
+    careers_url: https://careers.airbnb.com
+    api: greenhouse
+    api_slug: airbnb
+    tc_range: "$180–260K"
+    tier: 1
+    notes: "Payments, BizTech AI, and Growth Platform teams"
+
+  - name: Databricks
+    careers_url: https://databricks.com/company/careers/open-positions
+    api: greenhouse
+    api_slug: databricks
+    tc_range: "$180–300K"
+    tier: 1
+    notes: "Strong for Spark/data platform engineers. Target Staff level for top TC."
+
+  - name: Anthropic
+    careers_url: https://www.anthropic.com/careers/jobs
+    api: lever
+    api_slug: anthropic
+    tc_range: "$250–400K"
+    tier: 1
+    notes: "AI platform and research engineering roles"
+
+  - name: OpenAI
+    careers_url: https://openai.com/careers
+    api: greenhouse
+    api_slug: openai
+    tc_range: "$250–400K"
+    tier: 1
+    notes: "Platform, research infra, and applied AI engineering"
+
+  # ── Tier 2 examples ───────────────────────────────────────────────────────────
+
+  - name: Uber
+    careers_url: https://www.uber.com/global/en/careers/
+    api: null
+    tc_range: "$160–280K"
+    tier: 2
+    notes: "Data platform and marketplace engineering are strong fits"
+
+  - name: Atlassian
+    careers_url: https://www.atlassian.com/company/careers/all-jobs
+    api: greenhouse
+    api_slug: atlassian
+    tc_range: "$150–250K"
+    tier: 2
+    notes: "Distributed-first. Target Staff/P60 level for top TC."
+
+  - name: Rippling
+    careers_url: https://ats.rippling.com/rippling/jobs
+    api: null
+    tc_range: "$150–300K"
+    tier: 2
+    notes: "Django/React stack. Target Staff level for competitive TC."
+
+  - name: Figma
+    careers_url: https://www.figma.com/careers/
+    api: greenhouse
+    api_slug: figma
+    tc_range: "$180–280K"
+    tier: 2
+    notes: "Infra, platform, and full-stack product roles"
+
+  - name: Linear
+    careers_url: https://linear.app/careers
+    api: ashby
+    api_slug: linear
+    tc_range: "$180–280K"
+    tier: 2
+    notes: "Small team, high-impact eng roles"
+
+  - name: Vercel
+    careers_url: https://vercel.com/careers
+    api: ashby
+    api_slug: vercel
+    tc_range: "$160–260K"
+    tier: 2
+    notes: "Remote-first. Infrastructure and DX engineering."
+
+  - name: Notion
+    careers_url: https://www.notion.so/careers
+    api: greenhouse
+    api_slug: notion
+    tc_range: "$160–260K"
+    tier: 2
+    notes: "Product-focused full-stack roles"
+
+  - name: Nvidia
+    careers_url: https://nvidia.wd5.myworkdayjobs.com/NVIDIAExternalCareerSite
+    api: null
+    tc_range: "$180–350K"
+    tier: 2
+    notes: "AI infra and platform roles. Large Bangalore presence."
+
+  - name: Broadcom
+    careers_url: https://broadcom.wd1.myworkdayjobs.com/External_Career
+    api: null
+    tc_range: "$150–250K"
+    tier: 2
+    notes: "Target SaaS/CA Technologies teams (Java, Python). Avoid VMware/networking."
+
+  # ── Tier 3 examples ───────────────────────────────────────────────────────────
+
+  - name: Coinbase
+    careers_url: https://www.coinbase.com/careers
+    api: greenhouse
+    api_slug: coinbase
+    tc_range: "$180–280K"
+    tier: 3
+    notes: "Blockchain + backend infra"
+
+  - name: Plaid
+    careers_url: https://plaid.com/careers/
+    api: greenhouse
+    api_slug: plaid
+    tc_range: "$180–280K"
+    tier: 3
+    notes: "Fintech infrastructure and data platform"
+
+  - name: Datadog
+    careers_url: https://www.datadoghq.com/careers/
+    api: greenhouse
+    api_slug: datadoghq
+    tc_range: "$160–260K"
+    tier: 3
+    notes: "Observability platform — great for engineers with Grafana/Prometheus exp"
+
+  - name: Cloudflare
+    careers_url: https://www.cloudflare.com/careers/jobs/
+    api: greenhouse
+    api_slug: cloudflare
+    tc_range: "$160–260K"
+    tier: 3
+    notes: "Edge infra, distributed systems"
+
+  - name: HashiCorp
+    careers_url: https://www.hashicorp.com/careers
+    api: greenhouse
+    api_slug: hashicorp
+    tc_range: "$150–240K"
+    tier: 3
+    notes: "Platform / DevOps tooling"
+
+  # ── Practice examples ─────────────────────────────────────────────────────────
+
+  - name: Postman
+    careers_url: https://www.postman.com/company/careers/open-positions/
+    api: null
+    tc_range: "Varies"
+    tier: practice
+    notes: "Good for API platform engineering interview practice"
+
+  - name: Okta
+    careers_url: https://www.okta.com/company/careers/
+    api: greenhouse
+    api_slug: okta
+    tc_range: "Varies"
+    tier: practice
+    notes: "IAM domain, Java backend, good systems design interviews"
