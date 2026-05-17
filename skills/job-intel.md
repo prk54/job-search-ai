@@ -25,7 +25,7 @@ Read `~/.job-search/config.yml` for defaults (city, currency, role_levels).
 
 ### 2. Run salary research (skip if --interview-only)
 
-Search all portals **in parallel using WebSearch**. Run one search per portal:
+Run each search in sequence. Print a one-line progress indicator before each search so the user knows it's working (e.g. `→ Searching Levels.fyi...`). This takes 3–6 minutes for all portals — set expectations upfront.
 
 **A. Levels.fyi**
 ```

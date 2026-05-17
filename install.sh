@@ -33,9 +33,26 @@ fi
 if command -v tectonic &>/dev/null; then
   ok "tectonic found ($(tectonic --version 2>/dev/null))"
 else
-  warn "tectonic not found. PDF compilation won't work."
+  warn "tectonic not found. PDF compilation (/job-resume) won't work."
   echo "     Install with: brew install tectonic"
-  echo "     (continuing setup — you can install tectonic later)"
+  echo "     (continuing setup — install tectonic before using /job-resume)"
+fi
+
+# pdftotext (needed by /job-profile and /job-audit)
+if command -v pdftotext &>/dev/null; then
+  ok "pdftotext found"
+else
+  warn "pdftotext not found. Resume PDF parsing (/job-profile) will fall back to Claude's native PDF reader."
+  echo "     Install with: brew install poppler"
+  echo "     (optional — Claude can still read PDFs without it)"
+fi
+
+# python3 (needed by /job-audit for PDF text extraction)
+if command -v python3 &>/dev/null; then
+  ok "python3 found ($(python3 --version 2>/dev/null))"
+else
+  warn "python3 not found. /job-audit won't be able to verify ATS parsability."
+  echo "     Install with: brew install python3"
 fi
 
 echo ""
@@ -51,7 +68,7 @@ ok "Directories ready"
 info "Installing skills to ~/.claude/skills/ ..."
 mkdir -p "$SKILLS_DIR"
 
-for skill in job job-profile job-scan job-resume job-intel; do
+for skill in job job-profile job-scan job-resume job-intel job-audit; do
   src="$SCRIPT_DIR/skills/${skill}.md"
   dst="$SKILLS_DIR/${skill}.md"
   if [ -f "$dst" ]; then
@@ -65,8 +82,8 @@ done
 
 info "Copying LaTeX templates..."
 cp "$SCRIPT_DIR/templates/jake-resume.tex" "$JOB_SEARCH_DIR/templates/jake.tex"
-cp "$SCRIPT_DIR/templates/classic.tex" "$JOB_SEARCH_DIR/templates/classic.tex"
-ok "Templates ready (jake, classic)"
+cp "$SCRIPT_DIR/templates/career-ops.tex" "$JOB_SEARCH_DIR/templates/career-ops.tex"
+ok "Templates ready (jake, career-ops)"
 
 # ─── Config files (only if they don't exist — never overwrite user data) ────────
 
@@ -82,6 +99,13 @@ if [ ! -f "$JOB_SEARCH_DIR/companies.yml" ]; then
   ok "Created ~/.job-search/companies.yml (30+ companies pre-configured)"
 else
   warn "~/.job-search/companies.yml already exists — skipping (your companies preserved)"
+fi
+
+if [ ! -f "$JOB_SEARCH_DIR/CLAUDE.md" ]; then
+  cp "$SCRIPT_DIR/templates/CLAUDE.example.md" "$JOB_SEARCH_DIR/CLAUDE.md"
+  ok "Created ~/.job-search/CLAUDE.md (workspace context for Claude Code)"
+else
+  warn "~/.job-search/CLAUDE.md already exists — skipping"
 fi
 
 # ─── Done ─────────────────────────────────────────────────────────────────────

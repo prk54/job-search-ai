@@ -63,23 +63,38 @@ Parse a resume PDF or LinkedIn export PDF and extract a structured profile saved
 }
 ```
 
-3. **Save to `~/.job-search/profile.json`** using the Write tool.
+3. **Validate the extracted JSON** before saving:
+   - `name` must be a non-empty string
+   - `experience` must be a non-empty array with at least 1 entry
+   - Each experience entry must have `company`, `title`, `start`
+   - `skills` must have at least one non-empty array
+   - If validation fails: show the user what's missing and ask them to clarify or paste the missing section. Do NOT save a corrupt profile.
 
-4. **Print a confirmation summary:**
+   Validate with:
+   ```bash
+   python3 -c "
+   import json, sys
+   p = json.load(open(sys.argv[1]))
+   assert p.get('name'), 'name is missing'
+   assert p.get('experience'), 'experience is empty'
+   assert any(p.get('skills', {}).values()), 'skills are empty'
+   print('valid')
+   " ~/.job-search/profile.json 2>&1
+   ```
+
+4. **Save to `~/.job-search/profile.json`** using the Write tool.
+
+5. **Print a confirmation summary using the actual extracted values:**
 ```
 ✅ Profile saved to ~/.job-search/profile.json
 
-Name:        Prateek Lalwani
-Current:     Senior Software Engineer at LinkedIn (Sept 2024 – Present)
-Experience:  8 years
-Companies:   LinkedIn, Salesforce, Nutanix, JPMorgan Chase
+Name:        <name from profile>
+Current:     <most recent title> at <most recent company> (<start> – Present)
+Experience:  <total years calculated from earliest start to today>
+Companies:   <list all companies, comma-separated>
 
-Top Skills:
-  Languages:  Java, Python, TypeScript, JavaScript, SQL
-  Backend:    Spring Boot, FastAPI, Django, Express.js
-  Frontend:   React, Redux, GraphQL
-  Streaming:  Kafka, Spark, PySpark, Elasticsearch
-  Infra:      AWS, Docker, Kubernetes
+Top Skills (from resume):
+  <each skill category>: <comma-separated skills>
 
 Run /job-scan to find matching roles at target companies.
 Run /job-resume <JD URL> to generate a tailored resume.

@@ -32,6 +32,7 @@ Parse the user's input after `/job`:
 | `scan [companies?]` | Find roles | Follow job-scan.md |
 | `intel <company> [role?] [--flags]` | Research | Follow job-intel.md |
 | `resume <company/URL> [--flags]` | Generate PDF | Follow job-resume.md |
+| `audit [pdf?] [jd-url?]` | Audit resume | Follow job-audit.md |
 | `full <company> [company…]` | Full pipeline | Intel → resume for each company |
 | `<company name only>` | Smart mode | Auto-detect best next action (see Step 3) |
 
@@ -39,26 +40,46 @@ Parse the user's input after `/job`:
 
 ## Step 2 — Always check current state first
 
-Before doing anything, silently check:
+Before doing anything, run these checks:
 
 ```bash
-# Profile exists and is recent?
-ls -la ~/.job-search/profile.json 2>/dev/null
+# 1. Profile exists?
+test -f ~/.job-search/profile.json && echo "profile:exists" || echo "profile:missing"
 
-# Last scan results?
-ls -la ~/.job-search/scan-results.json 2>/dev/null
+# 2. Profile valid JSON?
+python3 -c "import json,sys; json.load(open(sys.argv[1])); print('profile:valid')" \
+  ~/.job-search/profile.json 2>/dev/null || echo "profile:corrupt"
 
-# Recent intel reports?
-ls ~/.job-search/intel/ 2>/dev/null
+# 3. How old is the last scan? (in days)
+python3 -c "
+import os, time
+f = os.path.expanduser('~/.job-search/scan-results.json')
+if os.path.exists(f):
+    age = (time.time() - os.path.getmtime(f)) / 86400
+    print(f'scan:exists:{age:.0f}d ago')
+else:
+    print('scan:missing')
+" 2>/dev/null
 
-# Recent generated resumes?
-ls ~/.job-search/output/*.pdf 2>/dev/null | tail -5
+# 4. Which intel reports exist and how old?
+python3 -c "
+import os, time, glob
+files = glob.glob(os.path.expanduser('~/.job-search/intel/*.md'))
+for f in sorted(files):
+    age = (time.time() - os.path.getmtime(f)) / 86400
+    name = os.path.basename(f).split('-')[0]
+    print(f'intel:{name}:{age:.0f}d ago')
+" 2>/dev/null
+
+# 5. Recent resumes (last 5)
+ls -t ~/.job-search/output/*.pdf 2>/dev/null | head -5
 ```
 
-Use this state to:
-- Warn if profile is missing (always run job-profile first)
-- Show how stale the last scan is
-- Avoid re-running intel if a recent report (<7 days) exists for the same company
+**Cache rules (use these exact thresholds):**
+- Intel report: reuse if file exists for this company AND age ≤ 7 days → skip `/job-intel`
+- Scan results: reuse if age ≤ 14 days → skip `/job-scan`
+- Profile: always valid until user runs `/job profile` again
+- If profile is missing or corrupt → stop everything and prompt: "Run `/job profile ~/Downloads/resume.pdf` first"
 
 ---
 

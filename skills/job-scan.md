@@ -48,17 +48,26 @@ OR use Puppeteer to navigate to the careers URL and extract job titles + links.
 
 For each company, use WebSearch:
 ```
-"<company name>" senior software engineer bangalore levels.fyi 2025 OR 2026
+"<company name>" <role_level> software engineer <city> levels.fyi 2025 OR 2026
 ```
 
-Extract: median TC range in INR Cr. If already stored in `companies.yml` and was updated within 30 days, use the cached value and skip the search.
+- Read `target.city` and `target.currency` from `config.yml` to fill in the search query
+- Extract: median TC range. Always show in the **user's configured currency** (`target.currency`). If levels.fyi data is in USD and user's currency is INR, convert at current approximate rate and note the conversion.
+- If `tc_range` is already set in `companies.yml`, use it as-is (it was set by the user intentionally) — only override with fresh search if the user runs `--tc-only`.
 
 ### 4. Score profile fit
 
-For each open role found:
-- Fetch the JD text (WebFetch or Puppeteer on the job URL)
-- Count keyword overlaps between JD required skills and `profile.json` skills
-- Score: **High** (>70% overlap), **Medium** (40–70%), **Low** (<40%)
+For each open role found, use this exact algorithm:
+
+1. Extract all skills from `profile.json` — flatten all arrays under `skills` into one list, lowercase
+2. From the JD title + any fetched JD text, extract a "required skills" list (look for sections labeled "Required", "Must have", "Qualifications", or the first 3 skills mentioned)
+3. For each required skill from the JD:
+   - **Full match** (2 pts): exact word appears in profile skills list (case-insensitive)
+   - **Partial match** (1 pt): profile skill contains or is contained by the JD skill (e.g. "Spring" matches "Spring Boot")
+   - **No match** (0 pts): not found
+4. Score = total_points / (required_skills_count × 2)
+5. Rating: **High** ≥ 0.6 | **Medium** 0.3–0.59 | **Low** < 0.3
+6. If JD text cannot be fetched, score based on role title keywords only — mark as `(estimated)`
 
 ### 5. Output results table
 
