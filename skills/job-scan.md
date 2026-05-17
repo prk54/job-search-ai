@@ -23,7 +23,10 @@ Scan target companies for open roles matching your configured seniority and loca
 ```bash
 curl -s "https://boards-api.greenhouse.io/v1/boards/<api_slug>/jobs?content=true" | python3 -m json.tool
 ```
-Filter results: keep jobs where title contains any of: `Senior`, `Staff`, `Principal` AND contains any of: `Software Engineer`, `SWE`, `Engineer` AND location contains `Bengaluru` OR `Bangalore` OR `India` OR `Remote`.
+Filter results using values from `config.yml`:
+- Title must contain at least one of `target.role_levels` (e.g. Senior, Staff) AND one of `target.role_keywords` (e.g. Software Engineer)
+- Title must NOT contain any of `target.exclude_keywords`
+- Location must match `target.city` OR contain "Remote"
 
 **B. Ashby API** (if `api: ashby`):
 ```bash
@@ -63,27 +66,26 @@ Group by tier. Format:
 
 ```
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
- JOB SCAN RESULTS — Bangalore Senior/Staff SWE — May 2026
+ JOB SCAN — <city from config> <role_levels> Roles — <today's date>
+ TC Target: <tc_target from config>
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
- TIER 1 — Apply First (TC ≥ 1.5 Cr reliable)
-┌────────────┬─────────────────────────────────┬──────────────┬─────────────┬──────┐
-│ Company    │ Role                            │ TC Est       │ Meets 1.5Cr │ Fit  │
-├────────────┼─────────────────────────────────┼──────────────┼─────────────┼──────┤
-│ Stripe     │ Staff SWE – Search Platform     │ 1.33–1.71 Cr │ ✅          │ High │
-│ Airbnb     │ Senior SWE – Payments           │ 1.12–1.72 Cr │ ✅          │ High │
-│ Broadcom   │ [No open Bangalore SWE roles]   │ 1.77–1.88 Cr │ ✅          │ —    │
-└────────────┴─────────────────────────────────┴──────────────┴─────────────┴──────┘
+ TIER 1 — Apply First
+┌────────────┬─────────────────────────────────┬──────────────┬───────────────┬──────┐
+│ Company    │ Role                            │ TC Est       │ Meets Target  │ Fit  │
+├────────────┼─────────────────────────────────┼──────────────┼───────────────┼──────┤
+│ Stripe     │ Staff SWE – Search Platform     │ $220–280K    │ ✅            │ High │
+│ Airbnb     │ Senior SWE – Payments           │ $180–240K    │ ✅            │ High │
+└────────────┴─────────────────────────────────┴──────────────┴───────────────┴──────┘
 
  TIER 2 — Apply with Competing Offers
-┌────────────┬─────────────────────────────────┬──────────────┬─────────────┬──────┐
-│ Databricks │ Staff SWE – Fullstack           │ up to 1.7 Cr │ Likely      │ High │
-│ Uber       │ Senior SWE – Data Solutions     │ 1.06–1.75 Cr │ Likely      │ High │
-│ Atlassian  │ Senior Full Stack SWE           │ 1.05–1.77 Cr │ At P60      │ High │
-└────────────┴─────────────────────────────────┴──────────────┴─────────────┴──────┘
+┌────────────┬─────────────────────────────────┬──────────────┬───────────────┬──────┐
+│ Databricks │ Staff SWE – Fullstack           │ $200–300K    │ Likely        │ High │
+│ Uber       │ Senior SWE – Data Solutions     │ $160–250K    │ Likely        │ High │
+└────────────┴─────────────────────────────────┴──────────────┴───────────────┴──────┘
 
- PRACTICE — Interview Reps (TC not the goal)
- Flipkart · Postman · Okta — roles found, details omitted
+ PRACTICE — Interview Reps
+ <company names> — roles found, details omitted
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
  8 roles found across 7 companies
@@ -100,15 +102,15 @@ Write the full results to `~/.job-search/scan-results.json`:
   "scanned_at": "2026-05-17T...",
   "results": [
     {
-      "company": "Stripe",
+      "company": "<company name>",
       "tier": 1,
-      "tc_range": "1.33–1.71 Cr",
+      "tc_range": "<range from companies.yml or freshly fetched>",
       "meets_target": true,
       "roles": [
         {
-          "title": "Staff Software Engineer – Search Platform",
-          "url": "https://stripe.com/jobs/listing/...",
-          "location": "Bengaluru",
+          "title": "<role title>",
+          "url": "<direct JD URL>",
+          "location": "<city>",
           "fit": "High"
         }
       ]
@@ -119,7 +121,8 @@ Write the full results to `~/.job-search/scan-results.json`:
 
 ## Notes
 
-- Be aggressive with filtering: only surface **Senior, Staff, or Principal** Software Engineer roles. Skip product managers, designers, sales, data analysts, ML researchers unless the title clearly says "Software Engineer".
-- For Broadcom/Nvidia/Uber without a clean API, use Puppeteer to browse the careers portal — filter by location (Bangalore) and keyword (Software Engineer).
+- Only surface roles matching the user's configured `role_levels` and `role_keywords` — never show internships, junior, or management roles unless they explicitly appear in those lists.
+- For companies without a clean API (Workday, Taleo, iCIMS), use Puppeteer to browse the careers portal — filter by the user's configured city and role keywords.
 - TC data from `companies.yml` is the baseline. Only do a fresh levels.fyi search if the user runs `--tc-only` or the cached data is clearly stale (>60 days old).
-- If a company has no open Bangalore roles, say so clearly — don't omit them silently.
+- If a company has no open matching roles, include it in the output with "No open roles found" — do not silently omit it.
+- The "Meets Target" column compares each role's TC estimate against `target.tc_target` from `config.yml`.

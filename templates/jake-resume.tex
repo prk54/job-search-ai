@@ -1,6 +1,11 @@
 %-------------------------
-% Prateek Lalwani — Stripe: Staff/SWE, Search & Data Platform
-% Single column, single page
+% Jake's Resume — Clean Structural Template
+% Compatible with XeLaTeX / tectonic
+% Based on: github.com/jakeryang/resume (sb2nov base)
+%
+% DO NOT add personal content here.
+% This file defines the LaTeX preamble and commands only.
+% The /job-resume skill generates the full resume content.
 %------------------------
 
 \documentclass[letterpaper,10pt]{article}
@@ -32,9 +37,13 @@
   \vspace{-5pt}\scshape\raggedright\normalsize\bfseries
 }{}{0em}{}[\color{black}\titlerule\vspace{-2pt}]
 
+%% ── Commands (used by the generated resume content) ──────────────────────────
+
 \newcommand{\resumeItem}[1]{
   \item\small{#1\vspace{-3pt}}
 }
+
+%% \resumeSubheading{Company}{Date Range}{Title}{Location}
 \newcommand{\resumeSubheading}[4]{
   \vspace{-1pt}\item[]
     \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
@@ -42,100 +51,57 @@
       \textit{\small#3} & \textit{\small#4}\\
     \end{tabular*}\vspace{-6pt}
 }
+
+%% \resumeProjectHeading{Project | Description}{Year}
+\newcommand{\resumeProjectHeading}[2]{
+  \item[]
+    \begin{tabular*}{\textwidth}[t]{l@{\extracolsep{\fill}}r}
+      \small#1 & \small#2\\
+    \end{tabular*}\vspace{-6pt}
+}
+
 \newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=0in, label={}]}
 \newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
 \newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.15in, label=\tiny$\bullet$, itemsep=0pt, topsep=1pt]}
 \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{1pt}}
 
-\begin{document}
-
-%---------- HEADING ----------
-\begin{center}
-  {\LARGE\scshape Prateek Lalwani}\\[2pt]
-  \small
-  \href{mailto:lalwani.prateek5@gmail.com}{\faEnvelope\ lalwani.prateek5@gmail.com} \;$|$\;
-  \faPhone\ +91 9916309826 \;$|$\;
-  \href{https://linkedin.com/in/prateeklalwani}{\faLinkedin\ prateeklalwani} \;$|$\;
-  Bengaluru, India
-\end{center}
-\vspace{-4pt}
-
-%---------- SUMMARY ----------
-\section{Summary}
-\vspace{2pt}
-\small{Senior Software Engineer with 8 years of experience building large-scale distributed systems and full-stack products at LinkedIn, Salesforce, Nutanix, and JPMorgan Chase. Deep expertise in search infrastructure (Elasticsearch), real-time data pipelines (Kafka, Spark), and high-throughput systems (500K+ TPS). Proven track record delivering AI/ML-powered products and platform engineering at global scale.}
-\vspace{-2pt}
-
-%---------- EXPERIENCE ----------
-\section{Experience}
-\resumeSubHeadingListStart
-
-  \resumeSubheading{LinkedIn}{Sept 2024 -- Present}
-    {Senior Software Engineer — Talent Insights \& Agentic Platform}{Bengaluru, India}
-  \resumeItemListStart
-    \resumeItem{Architected the \textbf{Talent Insights Search Platform} (Elasticsearch) for talent discovery across 50M+ enterprise users; reduced P99 query latency by 38\% via index lifecycle management and query DSL optimisation.}
-    \resumeItem{Designed a distributed \textbf{real-time ingestion pipeline} (Kafka + Spark Streaming) indexing 2M+ member profile updates/day into multi-region Elasticsearch clusters with zero-downtime rolling reindexing.}
-    \resumeItem{Led \textbf{Agentic UI Automation Platform} — AI-powered autonomous test generation across 300+ product surfaces; cut QA effort by 60\% and regression cycle time from 4 days to 6 hours.}
-    \resumeItem{Defined SLOs and Grafana/Prometheus alerting stack; maintained \textbf{99.97\% availability} across distributed Elasticsearch clusters in production.}
-  \resumeItemListEnd
-
-  \resumeSubheading{Salesforce}{Oct 2022 -- Sept 2024}
-    {Senior Software Engineer — AI Platform \& Type System}{Hyderabad, India}
-  \resumeItemListStart
-    \resumeItem{Built \textbf{AI Prompt Builder}: prompt versioning, LLM parameter configuration, and evaluation pipeline used by 10K+ enterprise admins to manage generative AI workflows at scale.}
-    \resumeItem{Developed \textbf{breaking change detection} engine and schema validation toolchain for Salesforce's Type System, preventing API incompatibilities across 200+ internal service boundaries.}
-    \resumeItem{Engineered \textbf{event streaming pipeline} capturing 500K+ daily user behavior events powering personalized UI delivery in the Experience Builder platform.}
-  \resumeItemListEnd
-
-  \resumeSubheading{Nutanix}{Jan 2022 -- Oct 2022}
-    {Software Engineer II — Developer Productivity \& Cloud Tooling}{Bengaluru, India}
-  \resumeItemListStart
-    \resumeItem{Built \textbf{Quota Management System} for private cloud resource cost optimisation across 1000+ internal tenants and \textbf{Health Check Framework} automating monitoring and self-repair of thousands of clusters, reducing MTTR by 45\%.}
-  \resumeItemListEnd
-
-  \resumeSubheading{JPMorgan Chase}{Jul 2018 -- Dec 2021}
-    {Software Engineer, promoted to Software Engineer II}{Bengaluru, India}
-  \resumeItemListStart
-    \resumeItem{Engineered \textbf{distributed data versioning framework} on Kafka + Elasticsearch handling 100K+ market risk data points daily; cut retrieval time 50\% via inverted index and segment-level caching.}
-    \resumeItem{Built \textbf{real-time breach detection rule engine} on Apache Kafka processing \textbf{500K+ transactions/second} against 100+ compliance rules with sub-10ms P99 latency.}
-    \resumeItem{Led \textbf{Payment Fraud Detection Engine} using ensemble ML (XGBoost, Random Forest) at \textbf{10K+ TPS}; improved fraud accuracy 40\%, serving millions of users.}
-  \resumeItemListEnd
-
-\resumeSubHeadingListEnd
-
-%---------- SKILLS ----------
-\section{Technical Skills}
-\vspace{2pt}
-\begin{itemize}[leftmargin=0in, label={}, itemsep=0pt]
-  \small\item{
-    \textbf{Search \& Streaming:} Elasticsearch, OpenSearch, Apache Kafka, Apache Spark, PySpark, Apache Flink\\
-    \textbf{Languages:} Java, Python, TypeScript, JavaScript, SQL\\
-    \textbf{Backend:} Spring Boot, FastAPI, Django, Express.js, Node.js \quad
-    \textbf{Frontend:} React, Redux, GraphQL\\
-    \textbf{Cloud \& Infra:} AWS, Docker, Kubernetes, Jenkins, Bash \quad
-    \textbf{Databases:} MySQL, MongoDB, Redis\\
-    \textbf{Observability:} Grafana, Prometheus, OpenTelemetry \quad
-    \textbf{Testing:} Jest, Pytest, JUnit
-  }
-\end{itemize}
-\vspace{-2pt}
-
-%---------- CERTIFICATIONS ----------
-\section{Certifications \& Awards}
-\vspace{2pt}
-\begin{itemize}[leftmargin=0in, label={}, itemsep=2pt]
-  \small\item{\textbf{AWS} Certified Developer – Associate \hfill ID: JZ986ZZB2J4Q15CT}
-  \small\item{\textbf{Coursera:} MLOps Specialization (DeepLearning.AI) \quad Applied ML with Python — University of Michigan}
-  \small\item{Spot Award (LinkedIn) \quad Runner-up — Microsoft ML \& Data Science Hackathon \quad Winner — Inter-Dept Coding Contest}
-  \small\item{\textbf{Publication:} Malware dataset in \textit{Mastering Machine Learning for Penetration Testing} (Packt Publishing)}
-\end{itemize}
-\vspace{-2pt}
-
-%---------- EDUCATION ----------
-\section{Education}
-\resumeSubHeadingListStart
-  \resumeSubheading{Dayananda Sagar College of Engineering \ {\normalfont\small(Visvesvaraya Technological University)}}{2014 -- 2018}
-    {Bachelor of Engineering, Information Technology}{Bengaluru, India}
-\resumeSubHeadingListEnd
-
-\end{document}
+%% ── Expected document structure (filled by /job-resume skill) ─────────────────
+%%
+%%  \begin{document}
+%%
+%%  \begin{center}
+%%    {\LARGE\scshape Full Name}\\[2pt]
+%%    \small
+%%    \href{mailto:email}{\faEnvelope\ email} \;$|$\;
+%%    \faPhone\ phone \;$|$\;
+%%    \href{https://linkedin.com/in/handle}{\faLinkedin\ handle} \;$|$\;
+%%    City, Country
+%%  \end{center}
+%%  \vspace{-4pt}
+%%
+%%  \section{Summary}
+%%  \small{2-3 sentence summary tailored to the role.}
+%%  \vspace{-2pt}
+%%
+%%  \section{Experience}
+%%  \resumeSubHeadingListStart
+%%    \resumeSubheading{Company}{Start -- End}{Title}{City, Country}
+%%    \resumeItemListStart
+%%      \resumeItem{Achievement with \textbf{metric}.}
+%%    \resumeItemListEnd
+%%  \resumeSubHeadingListEnd
+%%
+%%  \section{Technical Skills}
+%%  \vspace{2pt}
+%%  \begin{itemize}[leftmargin=0in, label={}, itemsep=0pt]
+%%    \small\item{
+%%      \textbf{Category:} Skill1, Skill2, Skill3\\
+%%    }
+%%  \end{itemize}
+%%
+%%  \section{Education}
+%%  \resumeSubHeadingListStart
+%%    \resumeSubheading{University (Affiliation)}{Start -- End}{Degree, Field}{City}
+%%  \resumeSubHeadingListEnd
+%%
+%%  \end{document}

@@ -62,10 +62,10 @@ For each experience entry in the profile, score relevance to this JD (High / Med
   - Lead each company section with the bullet most relevant to the JD
   - Inject JD keywords naturally (don't keyword-stuff — rewrite the bullet to include the term meaningfully)
   - Drop or deprioritise bullets with no relevance to the JD
-  - LinkedIn (current role): max 4 bullets
-  - Salesforce: max 3 bullets
-  - Nutanix: max 1–2 bullets (combine if needed)
-  - JPMorgan: max 3 bullets (always one company block, "Software Engineer, promoted to Software Engineer II")
+  - **Current role** (most recent): max 4 bullets — this is the most important section
+  - **Previous roles**: max 2–3 bullets each, prioritise impact and metrics
+  - **Oldest/shortest roles** (< 1 year or > 6 years ago): max 1–2 bullets, combine if needed
+  - If a person held multiple titles at one company, show as one block: "Title A, promoted to Title B"
 - **Skills section**: Lead with the skills most relevant to the JD
 - **Certifications**: Only include if relevant to the JD domain (e.g. AWS cert for cloud roles, MLOps for AI roles)
 - **One page rule**: The final PDF MUST be one page. Trim bullets ruthlessly if it overflows.
@@ -116,28 +116,31 @@ Use the Google Drive MCP tool to upload the PDF:
 - File name: `<Company> - <Role Title> - <Date>.pdf`
 
 ### 12. Print confirmation
-```
-✅ Resume generated: airbnb-senior-swe-payments-2026-05-17.pdf
 
-  Company:   Airbnb
-  Role:      Senior Software Engineer – Payments
-  Template:  Jake's Resume
-  Pages:     1
-  File:      ~/.job-search/output/airbnb-senior-swe-payments-2026-05-17.pdf
+Print a summary using the actual values from this run:
+
+```
+✅ Resume generated: <company>-<role-slug>-<date>.pdf
+
+  Company:   <company>
+  Role:      <role title>
+  Template:  <template name>
+  Pages:     <page count>
+  File:      ~/.job-search/output/<filename>.pdf
 
   Key tailoring applied:
-  → Summary rewritten for Payments / FinTech archetype
-  → JPMorgan Fraud Detection Engine bullet moved to #1 (10K TPS, payments domain)
-  → Kafka + Elasticsearch keywords injected into LinkedIn bullets
-  → AWS cert included (cloud infra role)
+  → Summary rewritten for <archetype> archetype
+  → <Most relevant bullet> moved to #1 in <most recent company>
+  → <JD keyword> injected into <N> bullets
+  → <Cert> included/excluded based on role relevance
 
 PDF is open in your viewer. Run /job-resume <next JD URL> for another role.
 ```
 
 ## Notes
 
-- Always generate fresh from `profile.json` — never use hardcoded profile data.
-- The one-page rule is non-negotiable. Recruiters at these companies expect 1 page for senior ICs.
-- After generation, briefly list what tailoring was applied so the user can verify it makes sense.
+- Always generate fresh from `profile.json` — never hardcode any profile data in this skill.
+- The one-page rule is non-negotiable for IC roles. Senior managers or directors may need 2 pages.
+- After generation, list what tailoring was actually applied (specific to this user's profile + JD) so they can verify it makes sense.
 - If the JD URL is a LinkedIn job URL, Puppeteer should still be able to fetch it if the user is logged in. If not, ask the user to paste the JD text instead.
-- For Broadcom/Nvidia roles on Workday (iframe-heavy), fetch the page and look for the main job description div — it may require scrolling/waiting.
+- For Workday/iCIMS/Taleo portals (iframe-heavy), use Puppeteer to navigate and wait for the job description to load before extracting text.
