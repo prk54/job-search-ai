@@ -16,6 +16,7 @@ Single entry point for the entire job search workflow. Understands natural langu
 /job full airbnb stripe                 → intel + resume for multiple companies in sequence
 /job profile                            → re-parse resume and update profile
 /job profile ~/Downloads/resume.pdf     → parse a specific file
+/job build                              → build base profile (via interview/free text) & compile PDF
 /job status                             → show what's been done, what's pending
 ```
 
@@ -28,6 +29,7 @@ Parse the user's input after `/job`:
 | Input pattern | Intent | Action |
 |---|---|---|
 | No args / `status` | Dashboard | Show step 2 status check |
+| `build [flags]` | Build base resume | Follow job-build.md |
 | `profile [file?]` | Parse resume | Follow job-profile.md |
 | `scan [companies?]` | Find roles | Follow job-scan.md |
 | `intel <company> [role?] [--flags]` | Research | Follow job-intel.md |
@@ -78,8 +80,8 @@ ls -t ~/.job-search/output/*.pdf 2>/dev/null | head -5
 **Cache rules (use these exact thresholds):**
 - Intel report: reuse if file exists for this company AND age ≤ 7 days → skip `/job-intel`
 - Scan results: reuse if age ≤ 14 days → skip `/job-scan`
-- Profile: always valid until user runs `/job profile` again
-- If profile is missing or corrupt → stop everything and prompt: "Run `/job profile ~/Downloads/resume.pdf` first"
+- Profile: always valid until user runs `/job profile` or `/job build` again
+- If profile is missing or corrupt → stop everything and prompt: "Run `/job build` to build your base resume (interactive interview or paste text), or `/job profile ~/Downloads/resume.pdf` to parse a PDF."
 
 ---
 
@@ -89,7 +91,7 @@ When user types `/job <company>` with no other instruction, use this decision tr
 
 ```
 Does profile.json exist?
-  NO  → "Profile not found. Let me parse your resume first." → run job-profile
+  NO  → "Profile not found. Let's build your base resume first." → run job-build
   YES ↓
 
 Does intel report exist for this company (<7 days old)?
@@ -161,6 +163,7 @@ Done. 2 resumes generated. Run /job status to see full pipeline.
 ## Skill delegation rules
 
 When this skill delegates to a sub-skill, follow that skill's instructions exactly as written in:
+- `~/.claude/skills/job-build.md` — for base profile & resume building
 - `~/.claude/skills/job-profile.md` — for profile parsing
 - `~/.claude/skills/job-scan.md` — for company scanning
 - `~/.claude/skills/job-intel.md` — for salary + interview intel
@@ -172,7 +175,7 @@ Do not duplicate the logic here — read and follow those files at delegation ti
 
 ## Notes
 
-- Always check profile.json exists before running scan, intel, or resume. If missing, prompt the user to run `/job profile` first.
+- Always check profile.json exists before running scan, intel, or resume. If missing, prompt the user to run `/job build` or `/job profile` first.
 - Never re-generate a resume that already exists for the same company+role+date without asking.
 - In full pipeline mode, ask for confirmation before generating resumes if more than 2 companies are in the list.
 - Keep responses concise — the user wants to move fast. Show results, not explanations.

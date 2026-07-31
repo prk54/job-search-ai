@@ -68,14 +68,14 @@ ok "Directories ready"
 info "Installing skills to ~/.claude/skills/ ..."
 mkdir -p "$SKILLS_DIR"
 
-for skill in job job-profile job-scan job-resume job-intel job-audit; do
+for skill in job job-build job-profile job-scan job-resume job-intel job-audit; do
   src="$SCRIPT_DIR/skills/${skill}.md"
   dst="$SKILLS_DIR/${skill}.md"
   if [ -f "$dst" ]; then
     warn "Skill $skill already exists — overwriting"
   fi
   cp "$src" "$dst"
-  ok "Installed /job-${skill#job-} skill"
+  ok "Installed /${skill}"
 done
 
 # ─── Copy templates ────────────────────────────────────────────────────────────
@@ -122,6 +122,7 @@ echo ""
 echo "  2. Open Claude Code and use /job as the single entry point:"
 echo "     claude"
 echo "     /job                               # status dashboard"
+echo "     /job build                         # build base resume (interview or paste)"
 echo "     /job profile ~/Downloads/resume.pdf"
 echo "     /job scan"
 echo "     /job intel stripe"
@@ -129,5 +130,5 @@ echo "     /job resume https://careers.airbnb.com/..."
 echo "     /job full stripe airbnb databricks # full pipeline for 3 companies"
 echo ""
 echo "  Or use individual skills directly:"
-echo "     /job-profile  /job-scan  /job-intel  /job-resume"
+echo "     /job-build  /job-profile  /job-scan  /job-intel  /job-resume"
 echo ""
