@@ -19,7 +19,7 @@ fi
 echo ""
 
 # Remove skills
-for skill in job job-build job-profile job-scan job-resume job-intel job-audit; do
+for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply; do
   dst="$HOME/.claude/skills/${skill}.md"
   if [ -f "$dst" ]; then
     rm "$dst"

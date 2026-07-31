@@ -68,7 +68,7 @@ ok "Directories ready"
 info "Installing skills to ~/.claude/skills/ ..."
 mkdir -p "$SKILLS_DIR"
 
-for skill in job job-build job-profile job-scan job-resume job-intel job-audit; do
+for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply; do
   src="$SCRIPT_DIR/skills/${skill}.md"
   dst="$SKILLS_DIR/${skill}.md"
   if [ -f "$dst" ]; then
@@ -84,6 +84,12 @@ info "Copying LaTeX templates..."
 cp "$SCRIPT_DIR/templates/jake-resume.tex" "$JOB_SEARCH_DIR/templates/jake.tex"
 cp "$SCRIPT_DIR/templates/career-ops.tex" "$JOB_SEARCH_DIR/templates/career-ops.tex"
 ok "Templates ready (jake, career-ops)"
+
+info "Copying automation scripts..."
+mkdir -p "$JOB_SEARCH_DIR/scripts"
+cp "$SCRIPT_DIR/scripts/apply.py" "$JOB_SEARCH_DIR/scripts/apply.py"
+chmod +x "$JOB_SEARCH_DIR/scripts/apply.py"
+ok "Scripts ready (apply.py)"
 
 # ─── Config files (only if they don't exist — never overwrite user data) ────────
 
@@ -127,8 +133,10 @@ echo "     /job profile ~/Downloads/resume.pdf"
 echo "     /job scan"
 echo "     /job intel stripe"
 echo "     /job resume https://careers.airbnb.com/..."
+echo "     /job cover https://careers.airbnb.com/..."
+echo "     /job apply https://careers.airbnb.com/..."
 echo "     /job full stripe airbnb databricks # full pipeline for 3 companies"
 echo ""
 echo "  Or use individual skills directly:"
-echo "     /job-build  /job-profile  /job-scan  /job-intel  /job-resume"
+echo "     /job-build  /job-profile  /job-scan  /job-intel  /job-resume  /job-cover  /job-apply"
 echo ""

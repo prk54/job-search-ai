@@ -168,6 +168,42 @@ Report saved to `~/.job-search/intel/<company>-<date>.md`.
 
 ---
 
+### `/job-cover` — Tailored cover letter PDF
+
+```
+/job-cover https://careers.airbnb.com/positions/7581839/
+/job-cover                                ← paste JD text directly
+/job-cover <URL> --template career-ops    ← use specific template
+```
+
+Generates a tailored single-page cover letter matching the template formatting and contact header of your resume.
+
+---
+
+### `/job-apply` — Auto-fill application forms
+
+```
+/job-apply https://boards.greenhouse.io/stripe/jobs/123456
+/job-apply <JD-url> /path/to/specific/resume.pdf
+```
+
+Automatically opens a non-headless Chrome browser via Playwright, fills out all standard input fields (Name, Email, Phone, Location, Social Profiles), attaches the latest tailored resume PDF for that company, and leaves the browser open for final review and manual submit.
+
+---
+
+### `/job-audit` — Resume Quality Audit
+
+```
+/job-audit                                ← audits the last generated resume PDF
+/job-audit /path/to/specific/resume.pdf
+/job-audit <pdf-path> <JD-url>            ← checks keyword coverage vs a JD
+```
+
+Audits PDF resumes for selectable text (ATS parsability), page counts, keyword coverage, verb strength, and overused buzzwords, and offers to auto-fix and recompile the PDF.
+
+---
+
+
 ## Configuration
 
 ### `~/.job-search/config.yml`
@@ -230,6 +266,8 @@ To use a custom template: place your `.tex` file in `~/.job-search/templates/` a
 ├── templates/
 │   ├── jake.tex          ← Jake's Resume LaTeX template
 │   └── classic.tex       ← classic LaTeX template
+├── scripts/
+│   └── apply.py          ← browser auto-fill automation script
 └── output/               ← generated PDFs and .tex files
 
 ~/.claude/skills/
@@ -259,9 +297,9 @@ Removes `~/.job-search/` and the seven skill files. Does not touch your Claude C
 PRs welcome. See [CONTRIBUTING.md](docs/CONTRIBUTING.md).
 
 Ideas for extensions:
-- `/job-apply` — fill application forms via Puppeteer
-- `/job-prep` — generate STAR interview stories per company
+- `/job-prep` — generate STAR interview stories and roleplay mock interviews per company
 - `/job-track` — Kanban tracker for application pipeline
+- `/job-negotiate` — evaluate offer letters and draft counter-offer email scripts
 - Additional LaTeX templates
 - Support for more ATS systems (SmartRecruiters, iCIMS, Workday)
 
