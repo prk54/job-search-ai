@@ -68,7 +68,7 @@ ok "Directories ready"
 info "Installing skills to ~/.claude/skills/ ..."
 mkdir -p "$SKILLS_DIR"
 
-for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply; do
+for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply job-discover; do
   src="$SCRIPT_DIR/skills/${skill}.md"
   dst="$SKILLS_DIR/${skill}.md"
   if [ -f "$dst" ]; then
@@ -78,18 +78,19 @@ for skill in job job-build job-profile job-scan job-resume job-intel job-audit j
   ok "Installed /${skill}"
 done
 
-# ─── Copy templates ────────────────────────────────────────────────────────────
-
-info "Copying LaTeX templates..."
+info "Copying LaTeX templates and seed lists..."
 cp "$SCRIPT_DIR/templates/jake-resume.tex" "$JOB_SEARCH_DIR/templates/jake.tex"
 cp "$SCRIPT_DIR/templates/career-ops.tex" "$JOB_SEARCH_DIR/templates/career-ops.tex"
-ok "Templates ready (jake, career-ops)"
+cp "$SCRIPT_DIR/templates/companies_seed.json" "$JOB_SEARCH_DIR/companies_seed.json"
+ok "Templates and seeds ready"
 
 info "Copying automation scripts..."
 mkdir -p "$JOB_SEARCH_DIR/scripts"
 cp "$SCRIPT_DIR/scripts/apply.py" "$JOB_SEARCH_DIR/scripts/apply.py"
 chmod +x "$JOB_SEARCH_DIR/scripts/apply.py"
-ok "Scripts ready (apply.py)"
+cp "$SCRIPT_DIR/scripts/discover.py" "$JOB_SEARCH_DIR/scripts/discover.py"
+chmod +x "$JOB_SEARCH_DIR/scripts/discover.py"
+ok "Scripts ready (apply.py, discover.py)"
 
 # ─── Config files (only if they don't exist — never overwrite user data) ────────
 
@@ -130,6 +131,7 @@ echo "     claude"
 echo "     /job                               # status dashboard"
 echo "     /job build                         # build base resume (interview or paste)"
 echo "     /job profile ~/Downloads/resume.pdf"
+echo "     /job discover                      # discover target companies dynamically"
 echo "     /job scan"
 echo "     /job intel stripe"
 echo "     /job resume https://careers.airbnb.com/..."
@@ -138,5 +140,5 @@ echo "     /job apply https://careers.airbnb.com/..."
 echo "     /job full stripe airbnb databricks # full pipeline for 3 companies"
 echo ""
 echo "  Or use individual skills directly:"
-echo "     /job-build  /job-profile  /job-scan  /job-intel  /job-resume  /job-cover  /job-apply"
+echo "     /job-build  /job-profile  /job-scan  /job-intel  /job-resume  /job-cover  /job-apply  /job-discover"
 echo ""

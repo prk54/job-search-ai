@@ -7,8 +7,11 @@
 ```
 /job-build                               → build base resume (interview or paste)
 /job-profile ~/Downloads/resume.pdf      → extracts your profile from existing resume
+/job-discover                            → discovers hiring companies in your city
 /job-scan stripe airbnb databricks       → finds open roles + TC data
 /job-resume https://careers.airbnb.com/… → tailored 1-page PDF in 60s
+/job-cover https://careers.airbnb.com/…  → tailored matching cover letter PDF
+/job-apply https://careers.airbnb.com/…  → auto-fills forms + uploads resume
 /job-intel stripe "senior software engineer" → salary + interview intel from 7 portals
 /job-audit                               → audits your resume against a JD
 ```
@@ -21,8 +24,11 @@
 |---|---|
 | `/job-build` | Build your base profile via an interactive interview or pasting free text |
 | `/job-profile` | Upload any resume (PDF, LinkedIn export) → structured profile stored locally |
+| `/job-discover` | Discovers target companies dynamically based on location/keywords |
 | `/job-scan` | Scans target company career pages (via public APIs) → open roles + TC benchmarks |
 | `/job-resume` | Takes a JD URL or text + your profile → generates a keyword-tailored LaTeX PDF |
+| `/job-cover` | Generates keyword-tailored matching cover letter PDFs |
+| `/job-apply` | Automatically fills job application forms and uploads resumes |
 | `/job-intel` | Aggregates salary data + interview process from 7+ portals → structured report |
 | `/job-audit` | Audits your resume for ATS parsability, keyword coverage, and bullet quality |
 
@@ -261,21 +267,26 @@ To use a custom template: place your `.tex` file in `~/.job-search/templates/` a
 ~/.job-search/
 ├── config.yml            ← your preferences (city, TC target, role level)
 ├── profile.json          ← extracted from your resume (/job-profile writes this)
-├── companies.yml         ← your target companies
+├── companies.yml         ← your target companies (discovered or configured)
+├── companies_seed.json   ← seed database of 50+ tech companies
 ├── scan-results.json     ← latest scan output
 ├── templates/
 │   ├── jake.tex          ← Jake's Resume LaTeX template
 │   └── classic.tex       ← classic LaTeX template
 ├── scripts/
-│   └── apply.py          ← browser auto-fill automation script
+│   ├── apply.py          ← browser auto-fill automation script
+│   └── discover.py       ← dynamic company discovery script
 └── output/               ← generated PDFs and .tex files
 
 ~/.claude/skills/
 ├── job.md                ← orchestrator skill
 ├── job-build.md          ← /job-build skill
 ├── job-profile.md        ← /job-profile skill
+├── job-discover.md       ← /job-discover skill
 ├── job-scan.md           ← /job-scan skill
 ├── job-resume.md         ← /job-resume skill
+├── job-cover.md          ← /job-cover skill
+├── job-apply.md          ← /job-apply skill
 ├── job-intel.md          ← /job-intel skill
 └── job-audit.md          ← /job-audit skill
 ```
@@ -288,7 +299,7 @@ To use a custom template: place your `.tex` file in `~/.job-search/templates/` a
 ./uninstall.sh
 ```
 
-Removes `~/.job-search/` and the seven skill files. Does not touch your Claude Code installation.
+Removes `~/.job-search/` and the ten skill files. Does not touch your Claude Code installation.
 
 ---
 

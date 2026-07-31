@@ -34,8 +34,8 @@ chmod +x install.sh && ./install.sh
 ```
 
 The installer:
-- Copies seven skill files to `~/.claude/skills/`
-- Creates `~/.job-search/` with templates and config stubs
+- Copies nine skill files to `~/.claude/skills/`
+- Creates `~/.job-search/` with templates, scripts, and company seed lists
 - Never overwrites existing config files (safe to re-run)
 
 ---

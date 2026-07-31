@@ -17,6 +17,7 @@ Single entry point for the entire job search workflow. Understands natural langu
 /job profile                            → re-parse resume and update profile
 /job profile ~/Downloads/resume.pdf     → parse a specific file
 /job build                              → build base profile (via interview/free text) & compile PDF
+/job discover                           → discover target companies based on your location/keywords
 /job apply <JD-url>                      → auto-fill target job application form
 /job cover <JD-url>                      → generate tailored LaTeX PDF cover letter
 /job status                             → show what's been done, what's pending
@@ -38,6 +39,7 @@ Parse the user's input after `/job`:
 | `resume <company/URL> [--flags]` | Generate PDF | Follow job-resume.md |
 | `audit [pdf?] [jd-url?]` | Audit resume | Follow job-audit.md |
 | `full <company> [company…]` | Full pipeline | Intel → resume for each company |
+| `discover` | Discover companies | Follow job-discover.md |
 | `apply <URL> [resume?]` | Auto-fill app | Follow job-apply.md |
 | `cover <company/URL> [--flags]` | Cover letter | Follow job-cover.md |
 | `<company name only>` | Smart mode | Auto-detect best next action (see Step 3) |
@@ -174,6 +176,7 @@ When this skill delegates to a sub-skill, follow that skill's instructions exact
 - `~/.claude/skills/job-resume.md` — for resume generation
 - `~/.claude/skills/job-cover.md` — for cover letter generation
 - `~/.claude/skills/job-apply.md` — for job application auto-filling
+- `~/.claude/skills/job-discover.md` — for target company discovery
 
 Do not duplicate the logic here — read and follow those files at delegation time.
 
