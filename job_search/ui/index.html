@@ -89,6 +89,38 @@
                     </div>
                 </div>
 
+                <!-- Pipeline Stepper Roadmap -->
+                <div class="pipeline-stepper-card content-card">
+                    <h2>Job Search Roadmap Progress</h2>
+                    <p class="subtitle" style="margin-bottom: 1.5rem;">Visual pipeline stages to track your application milestones</p>
+                    <div class="stepper-container">
+                        <div class="step-node" id="step-node-1">
+                            <div class="step-circle"><i class="fa-solid fa-user"></i></div>
+                            <div class="step-label">1. Build Profile</div>
+                        </div>
+                        <div class="step-line" id="step-line-1"></div>
+                        <div class="step-node" id="step-node-2">
+                            <div class="step-circle"><i class="fa-solid fa-compass"></i></div>
+                            <div class="step-label">2. Discover Boards</div>
+                        </div>
+                        <div class="step-line" id="step-line-2"></div>
+                        <div class="step-node" id="step-node-3">
+                            <div class="step-circle"><i class="fa-solid fa-magnifying-glass"></i></div>
+                            <div class="step-label">3. Scan Openings</div>
+                        </div>
+                        <div class="step-line" id="step-line-3"></div>
+                        <div class="step-node" id="step-node-4">
+                            <div class="step-circle"><i class="fa-solid fa-file-pdf"></i></div>
+                            <div class="step-label">4. Tailor Resume</div>
+                        </div>
+                        <div class="step-line" id="step-line-4"></div>
+                        <div class="step-node" id="step-node-5">
+                            <div class="step-circle"><i class="fa-solid fa-paper-plane"></i></div>
+                            <div class="step-label">5. Auto-Apply</div>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Recent Pipeline Table Section -->
                 <div class="content-card">
                     <div class="card-header">
@@ -122,12 +154,16 @@
                         <h1>Profile Builder</h1>
                         <p class="subtitle">Your structured credentials parsed locally in SQLite database</p>
                     </div>
-                    <button class="btn btn-primary" onclick="saveProfileData()"><i class="fa-solid fa-save"></i> Save Profile</button>
+                    <div class="header-actions">
+                        <button class="btn btn-secondary active" id="toggle-manual-profile" onclick="showManualProfile()"><i class="fa-solid fa-pen"></i> Edit Manually</button>
+                        <button class="btn btn-accent" id="toggle-chat-profile" onclick="startAIInterview()"><i class="fa-solid fa-comments"></i> Start AI Interview</button>
+                        <button class="btn btn-primary" id="btn-save-profile" onclick="saveProfileData()"><i class="fa-solid fa-save"></i> Save Profile</button>
+                    </div>
                 </header>
 
                 <div class="profile-editor-layout">
-                    <!-- Form Details -->
-                    <div class="form-container">
+                    <!-- Form Details (Manual Input) -->
+                    <div class="form-container" id="profile-manual-view">
                         <div class="content-card">
                             <h2>Contact Details</h2>
                             <div class="form-grid">
@@ -161,6 +197,21 @@
                         <div class="content-card">
                             <h2>Professional Summary</h2>
                             <textarea id="prof-summary" rows="4" placeholder="Brief elevator pitch highlighting achievements and experience..."></textarea>
+                        </div>
+                    </div>
+
+                    <!-- Chat Details (Conversational Chat Interface) -->
+                    <div class="form-container" id="profile-chat-view" style="display: none;">
+                        <div class="content-card chat-card-container">
+                            <h2>AI Chat Interview</h2>
+                            <p class="helper-text">Talk to our AI assistant to extract metrics and build your base resume profile.</p>
+                            <div class="chat-messages-area" id="chat-messages">
+                                <!-- Loaded dynamically -->
+                            </div>
+                            <div class="chat-input-area">
+                                <input type="text" id="chat-input-field" placeholder="Type your answer here..." onkeydown="handleChatKey(event)">
+                                <button class="btn btn-accent" id="chat-send-btn" onclick="sendChatMessage()"><i class="fa-solid fa-paper-plane"></i> Send</button>
+                            </div>
                         </div>
                     </div>
                     

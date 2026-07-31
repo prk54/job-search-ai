@@ -253,139 +253,93 @@ def discover():
     console.print("Run 'job-search status' to view your target board.")
 
 
-@app.command()
+@app.command(name="build")
 def build_profile():
-    """Build your base candidate profile via step-by-step interactive terminal prompts"""
+    """Start an AI-driven interactive conversation to build your resume profile"""
     console.print("[cyan]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/cyan]")
-    console.print("[bold white]   BUILD YOUR CANDIDATE PROFILE   [/bold white]")
+    console.print("[bold white]   AI INTERACTIVE PROFILE BUILDER   [/bold white]")
     console.print("[cyan]━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━[/cyan]\n")
+    console.print("Starting chat with Claude to build your profile. Type 'exit' to quit at any time.\n")
     
-    name = Prompt.ask("Full Name")
-    email = Prompt.ask("Email Address")
-    phone = Prompt.ask("Phone Number")
-    location = Prompt.ask("Current Location (City, State/Country)")
-    linkedin = Prompt.ask("LinkedIn Profile URL")
-    github = Prompt.ask("GitHub/Portfolio URL", default="")
+    chat_history = [
+        {"role": "system", "content": (
+            "You are conducting an interactive interview to build the candidate's resume. "
+            "Ask ONE brief question at a time to collect their name, email, phone, location, education, and experience. "
+            "Focus heavily on achievements and proactively probe for metrics using the Google STAR/XYZ formula (Accomplished X, measured by Y, by doing Z). "
+            "Be friendly and conversational. Keep questions short. "
+            "Once you have gathered all necessary information (name, email, phone, location, education, at least 1 job, and skills), "
+            "compile the profile into a JSON matching this schema: "
+            '{"name": "", "email": "", "phone": "", "location": "", "linkedin": "", "github": "", "summary": "", '
+            '"experience": [{"company": "", "title": "", "start": "", "end": "", "location": "", "bullets": [""]}], '
+            '"education": [{"institution": "", "degree": "", "field": "", "start": "", "end": "", "location": ""}], '
+            '"skills": {"languages": [], "frameworks_and_tools": [], "databases": []}} '
+            "Output the final JSON strictly enclosed in <json> and </json> tags, and append the keyword 'INTERVIEW_COMPLETE' at the very end."
+        )}
+    ]
     
-    # Summary
-    summary = Prompt.ask("Professional Summary / Elevator pitch")
+    llm_prompt = "Generate a friendly opening greeting to the candidate, introducing yourself as the Job Search AI Assistant and asking for their name to start."
+    chat_history.append({"role": "user", "content": llm_prompt})
     
-    # Experience Loop
-    experience = []
-    console.print("\n[bold cyan]→ Add Work Experience (Add up to 3 roles)[/bold cyan]")
-    while len(experience) < 3:
-        comp = Prompt.ask(f"Company #{len(experience)+1} (Leave empty to skip)")
-        if not comp:
-            break
-        title = Prompt.ask("Role Title")
-        start = Prompt.ask("Start Date (e.g. June 2023)")
-        end = Prompt.ask("End Date (or 'Present')")
-        loc = Prompt.ask("Job Location", default=location)
-        
-        console.print("Enter up to 3 achievements / bullet points (one per line, leave empty when done):")
-        bullets = []
-        while len(bullets) < 3:
-            bullet = Prompt.ask(f"Achievement #{len(bullets)+1}")
-            if not bullet:
-                break
-            bullets.append(bullet)
+    with console.status("[cyan]Connecting to AI Assistant...[/cyan]"):
+        try:
+            greeting = query_llm(json.dumps(chat_history))
+            console.print(f"\n[bold green]AI Assistant:[/bold green] {greeting.strip()}\n")
+            chat_history.append({"role": "assistant", "content": greeting})
+        except Exception as e:
+            console.print(f"[red]Error starting interview: {e}[/red]")
+            return
             
-        # Refine bullets with LLM
-        refined = refine_bullets_with_llm(bullets)
-        
-        experience.append({
-            "company": comp,
-            "title": title,
-            "start": start,
-            "end": end,
-            "location": loc,
-            "bullets": refined
-        })
-        
-        if not Confirm.ask("Add another role?"):
-            break
-            
-    # Education Loop
-    education = []
-    console.print("\n[bold cyan]→ Add Education[/bold cyan]")
     while True:
-        inst = Prompt.ask("Institution Name (School/University)")
-        degree = Prompt.ask("Degree (e.g. B.S., M.S.)")
-        field = Prompt.ask("Field of Study / Major")
-        start = Prompt.ask("Start Year")
-        end = Prompt.ask("End/Graduation Year")
-        loc = Prompt.ask("Location", default=location)
-        
-        education.append({
-            "institution": inst,
-            "degree": degree,
-            "field": field,
-            "start": start,
-            "end": end,
-            "location": loc
-        })
-        if not Confirm.ask("Add another degree?"):
+        user_input = Prompt.ask("[bold blue]You[/bold blue]")
+        if user_input.strip().lower() in ["exit", "quit"]:
+            console.print("[yellow]Interview cancelled.[/yellow]")
             break
             
-    # Skills categories
-    console.print("\n[bold cyan]→ Add Skills (Comma-separated values)[/bold cyan]")
-    skills = {}
-    lang = Prompt.ask("Languages (e.g. Python, Java, Go)")
-    if lang:
-        skills["languages"] = [x.strip() for x in lang.split(",")]
+        chat_history.append({"role": "user", "content": user_input})
         
-    frameworks = Prompt.ask("Frameworks/Tools (e.g. React, Docker, Kubernetes)")
-    if frameworks:
-        skills["frameworks_and_tools"] = [x.strip() for x in frameworks.split(",")]
+        with console.status("[cyan]AI is thinking...[/cyan]"):
+            try:
+                response = query_llm(json.dumps(chat_history))
+            except Exception as e:
+                console.print(f"[red]Error communicating with AI: {e}[/red]")
+                break
+                
+        if "INTERVIEW_COMPLETE" in response or "<json>" in response:
+            try:
+                profile_data = parse_json_from_llm(response)
+                
+                db = next(get_db())
+                db.query(DBProfile).delete()
+                db_profile = DBProfile(
+                    name=profile_data["name"],
+                    email=profile_data["email"],
+                    phone=profile_data["phone"],
+                    location=profile_data["location"],
+                    linkedin=profile_data.get("linkedin", ""),
+                    github=profile_data.get("github", ""),
+                    raw_profile_json=json.dumps(profile_data)
+                )
+                db.add(db_profile)
+                db.commit()
+                db.close()
+                
+                with open(APP_DIR / "profile.json", "w") as f:
+                    json.dump(profile_data, f, indent=2)
+                    
+                config = load_config()
+                base_tex = APP_DIR / "output" / "base-resume.tex"
+                render_resume(profile_data, config.resume.default_template, base_tex)
+                
+                console.print("\n[bold green]✓ Profile successfully compiled and saved![/bold green]")
+                console.print(f"  → Base PDF resume generated at: [cyan]{base_tex.with_suffix('.pdf')}[/cyan]\n")
+                break
+            except Exception as ex:
+                chat_history.append({"role": "system", "content": f"JSON parsing failed: {ex}. Please output clean JSON wrapped in <json>...</json> tags."})
+                console.print(f"\n[bold green]AI Assistant:[/bold green] Let me compile that again. Please hold...\n")
+                continue
         
-    databases = Prompt.ask("Databases (e.g. Postgres, DynamoDB)")
-    if databases:
-        skills["databases"] = [x.strip() for x in databases.split(",")]
-
-    profile_data = {
-        "name": name,
-        "email": email,
-        "phone": phone,
-        "location": location,
-        "linkedin": linkedin,
-        "github": github,
-        "summary": summary,
-        "experience": experience,
-        "education": education,
-        "skills": skills
-    }
-    
-    # Save to SQLite DB
-    db = next(get_db())
-    # Delete old profiles to keep only one active
-    db.query(DBProfile).delete()
-    
-    db_profile = DBProfile(
-        name=name,
-        email=email,
-        phone=phone,
-        location=location,
-        linkedin=linkedin,
-        github=github,
-        raw_profile_json=json.dumps(profile_data)
-    )
-    db.add(db_profile)
-    db.commit()
-    db.close()
-    
-    # Also backup to JSON file for compatibility
-    with open(APP_DIR / "profile.json", "w") as f:
-        json.dump(profile_data, f, indent=2)
-        
-    # Render base resume
-    config = load_config()
-    base_tex = APP_DIR / "output" / "base-resume.tex"
-    try:
-        render_resume(profile_data, config.resume.default_template, base_tex)
-        console.print(f"\n[bold green]✓ Base Profile created![/bold green] PDF resume saved at:")
-        console.print(f"  [cyan]{base_tex.with_suffix('.pdf')}[/cyan]\n")
-    except Exception as e:
-        console.print(f"\n[bold yellow]✓ Base Profile saved, but LaTeX compilation failed: {e}[/bold yellow]")
+        console.print(f"\n[bold green]AI Assistant:[/bold green] {response.strip()}\n")
+        chat_history.append({"role": "assistant", "content": response})
 
 
 @app.command()

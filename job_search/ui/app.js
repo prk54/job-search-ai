@@ -66,9 +66,47 @@ async function loadDashboardStatus() {
         } else {
             viewBaseBtn.disabled = true;
         }
+        
+        // Update Stepper Progress
+        updateStepperProgress(data);
     } catch (e) {
         showToast("Error updating dashboard statistics", "error");
     }
+}
+
+function updateStepperProgress(data) {
+    const totalJobs = data.funnel.wishlist + data.funnel.tailored + data.funnel.applied + data.funnel.interviewing;
+    const totalProcessed = data.funnel.tailored + data.funnel.applied + data.funnel.interviewing;
+    
+    const nodes = [
+        { id: 1, done: data.profile_exists, active: !data.profile_exists },
+        { id: 2, done: data.companies_count > 3, active: data.profile_exists && data.companies_count <= 3 },
+        { id: 3, done: totalJobs > 0, active: data.companies_count > 3 && totalJobs === 0 },
+        { id: 4, done: totalProcessed > 0, active: data.funnel.wishlist > 0 && totalProcessed === 0 },
+        { id: 5, done: data.funnel.applied > 0, active: data.funnel.tailored > 0 && data.funnel.applied === 0 }
+    ];
+    
+    nodes.forEach(n => {
+        const nodeEl = document.getElementById(`step-node-${n.id}`);
+        if (!nodeEl) return;
+        
+        nodeEl.classList.remove("completed", "active");
+        if (n.done) {
+            nodeEl.classList.add("completed");
+        } else if (n.active) {
+            nodeEl.classList.add("active");
+        }
+        
+        if (n.id < 5) {
+            const lineEl = document.getElementById(`step-line-${n.id}`);
+            if (lineEl) {
+                lineEl.classList.remove("active");
+                if (n.done) {
+                    lineEl.classList.add("active");
+                }
+            }
+        }
+    });
 }
 
 // 4. Profile Management
@@ -369,3 +407,111 @@ function closePdfModal() {
     modal.classList.remove("active");
     iframe.src = "";
 }
+
+// 9. Profile Editor Switcher & AI Interview Chat Handlers
+function showManualProfile() {
+    document.getElementById("profile-manual-view").style.display = "block";
+    document.getElementById("profile-chat-view").style.display = "none";
+    
+    document.getElementById("toggle-manual-profile").classList.add("active");
+    document.getElementById("toggle-chat-profile").classList.remove("active");
+    document.getElementById("btn-save-profile").style.display = "inline-flex";
+}
+
+async function startAIInterview() {
+    document.getElementById("profile-manual-view").style.display = "none";
+    document.getElementById("profile-chat-view").style.display = "block";
+    
+    document.getElementById("toggle-manual-profile").classList.remove("active");
+    document.getElementById("toggle-chat-profile").classList.add("active");
+    document.getElementById("btn-save-profile").style.display = "none";
+    
+    const chatMessages = document.getElementById("chat-messages");
+    chatMessages.innerHTML = `
+        <div class="chat-bubble system-loader">
+            <i class="fa-solid fa-spinner fa-spin"></i> Initializing AI interview session...
+        </div>
+    `;
+    
+    try {
+        const res = await fetch("/api/interview/start", { method: "POST" });
+        const data = await res.json();
+        chatMessages.innerHTML = "";
+        
+        if (res.ok) {
+            insertMessageBubble(data.message, "assistant");
+        } else {
+            insertMessageBubble("Failed to initialize AI interview. Please make sure Claude/Antigravity is configured.", "assistant");
+        }
+    } catch (e) {
+        chatMessages.innerHTML = "";
+        insertMessageBubble("Error contacting local web server.", "assistant");
+    }
+}
+
+async function sendChatMessage() {
+    const input = document.getElementById("chat-input-field");
+    const message = input.value.trim();
+    if (!message) return;
+    
+    // Add user bubble
+    insertMessageBubble(message, "user");
+    input.value = "";
+    
+    // Show typing loader
+    const chatMessages = document.getElementById("chat-messages");
+    const loaderId = "loader-" + Date.now();
+    const loaderDiv = document.createElement("div");
+    loaderDiv.id = loaderId;
+    loaderDiv.className = "chat-bubble system-loader";
+    loaderDiv.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> AI is thinking...`;
+    chatMessages.appendChild(loaderDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    
+    try {
+        const res = await fetch("/api/interview/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: message })
+        });
+        
+        // Remove loader
+        const loader = document.getElementById(loaderId);
+        if (loader) loader.remove();
+        
+        const data = await res.json();
+        if (res.ok) {
+            if (data.status === "complete") {
+                showToast("Interview finished! Your profile has been updated.", "success");
+                // Reload forms
+                loadProfileData();
+                showManualProfile();
+                loadDashboardStatus();
+            } else {
+                insertMessageBubble(data.message, "assistant");
+            }
+        } else {
+            insertMessageBubble("Error getting response from AI Assistant.", "assistant");
+        }
+    } catch (e) {
+        const loader = document.getElementById(loaderId);
+        if (loader) loader.remove();
+        insertMessageBubble("Communication failure.", "assistant");
+    }
+}
+
+function handleChatKey(event) {
+    if (event.key === "Enter") {
+        sendChatMessage();
+    }
+}
+
+function insertMessageBubble(text, sender) {
+    const chatMessages = document.getElementById("chat-messages");
+    const bubble = document.createElement("div");
+    bubble.className = `chat-bubble ${sender}`;
+    bubble.innerText = text;
+    chatMessages.appendChild(bubble);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
+

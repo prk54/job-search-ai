@@ -59,6 +59,53 @@ def execute_llm_query(prompt: str) -> str:
     driver = detect_llm_driver(config.llm.provider, config.llm.custom_command)
     return driver.execute(prompt)
 
+def tailor_experience_with_llm(profile_data: Dict[str, Any], jd_text: str) -> Dict[str, Any]:
+    prompt = (
+        "You are a professional resume writer. Tailor the candidate's achievements to align with this target Job Description (JD).\n"
+        f"Job Description:\n{jd_text}\n\n"
+        f"Candidate Experience:\n{json.dumps(profile_data.get('experience', []))}\n\n"
+        "Instructions:\n"
+        "- Modify the bullet points of achievements to highlight skills relevant to the JD (e.g. payments, cloud infra, system design) while maintaining truthfulness.\n"
+        "- Emphasize keywords and technologies requested in the JD.\n"
+        "- Do not alter the company names, dates, or titles.\n"
+        "Output the tailored list of experience objects matching the input format, strictly enclosed in <json> and </json> tags."
+    )
+    tailored_profile = profile_data.copy()
+    try:
+        response = execute_llm_query(prompt)
+        data = parse_json_from_llm(response)
+        if isinstance(data, list):
+            tailored_profile["experience"] = data
+    except Exception as e:
+        pass
+    return tailored_profile
+
+def draft_cover_letter_with_llm(profile_data: Dict[str, Any], company_name: str, role_title: str, jd_text: str) -> List[str]:
+    prompt = (
+        f"Draft a targeted, single-page cover letter for a {role_title} position at {company_name}.\n"
+        f"Candidate Profile:\n{json.dumps(profile_data)}\n\n"
+        f"Job Description:\n{jd_text}\n\n"
+        "Instructions:\n"
+        "- Write exactly 3 body paragraphs: Paragraph 1 (Introduction & alignment with company mission), "
+        "Paragraph 2 (Deep technical fit & matching achievements), Paragraph 3 (Closing and call to action).\n"
+        "- Keep it portfolio-appropriate so it compiles cleanly on a single page.\n"
+        "Output the cover letter as a JSON array of three strings (one for each paragraph), strictly enclosed in <json> and </json> tags."
+    )
+    try:
+        response = execute_llm_query(prompt)
+        data = parse_json_from_llm(response)
+        if isinstance(data, list) and len(data) >= 3:
+            return [str(item) for item in data]
+    except Exception as e:
+        pass
+        
+    return [
+        f"I am writing to express my interest in the {role_title} role at {company_name}.",
+        f"With my background in engineering, I am confident I can contribute to your team.",
+        f"Thank you for your consideration. I look forward to discussing how my skills align with your needs."
+    ]
+
+
 # API ENDPOINTS
 
 @app.get("/api/status")
@@ -138,6 +185,92 @@ def update_profile(data: ProfileUpdate):
         json.dump(profile_dict, f, indent=2)
         
     return {"status": "success", "message": "Profile updated."}
+
+# Chat session memory store
+chat_sessions = {}
+
+@app.post("/api/interview/start")
+def start_interview_api():
+    """Start conversational profile builder interview"""
+    session_id = "default"
+    chat_sessions[session_id] = [
+        {"role": "system", "content": (
+            "You are conducting an interactive interview to build the candidate's resume. "
+            "Ask ONE brief question at a time to collect their name, email, phone, location, education, and experience. "
+            "Proactively probe for metrics using the Google STAR/XYZ formula (Accomplished X, measured by Y, by doing Z). "
+            "Be friendly. Keep questions short. "
+            "Once you have gathered all necessary information (name, email, phone, location, education, at least 1 job, and skills), "
+            "compile the profile into a JSON matching this schema: "
+            '{"name": "", "email": "", "phone": "", "location": "", "linkedin": "", "github": "", "summary": "", '
+            '"experience": [{"company": "", "title": "", "start": "", "end": "", "location": "", "bullets": [""]}], '
+            '"education": [{"institution": "", "degree": "", "field": "", "start": "", "end": "", "location": ""}], '
+            '"skills": {"languages": [], "frameworks_and_tools": [], "databases": []}} '
+            "Output the final JSON strictly enclosed in <json> and </json> tags, and append the keyword 'INTERVIEW_COMPLETE' at the very end."
+        )}
+    ]
+    
+    prompt = "Generate a friendly opening greeting to the candidate, introducing yourself as the Job Search AI Assistant and asking for their name to start."
+    chat_sessions[session_id].append({"role": "user", "content": prompt})
+    
+    try:
+        greeting = execute_llm_query(json.dumps(chat_sessions[session_id]))
+        chat_sessions[session_id].append({"role": "assistant", "content": greeting})
+        return {"status": "chatting", "message": greeting.strip()}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/interview/chat")
+def chat_interview_api(data: ChatMessage):
+    """Continue conversational profile builder interview"""
+    session_id = "default"
+    if session_id not in chat_sessions:
+        # Auto start if session expired
+        start_interview_api()
+        
+    chat_sessions[session_id].append({"role": "user", "content": data.message})
+    
+    try:
+        response = execute_llm_query(json.dumps(chat_sessions[session_id]))
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+        
+    if "INTERVIEW_COMPLETE" in response or "<json>" in response:
+        try:
+            profile_data = parse_json_from_llm(response)
+            
+            db = next(get_db())
+            db.query(DBProfile).delete()
+            db_profile = DBProfile(
+                name=profile_data["name"],
+                email=profile_data["email"],
+                phone=profile_data["phone"],
+                location=profile_data["location"],
+                linkedin=profile_data.get("linkedin", ""),
+                github=profile_data.get("github", ""),
+                raw_profile_json=json.dumps(profile_data)
+            )
+            db.add(db_profile)
+            db.commit()
+            db.close()
+            
+            with open(APP_DIR / "profile.json", "w") as f:
+                json.dump(profile_data, f, indent=2)
+                
+            config = load_config()
+            base_tex = APP_DIR / "output" / "base-resume.tex"
+            render_resume(profile_data, config.resume.default_template, base_tex)
+            
+            # Clear chat session
+            if session_id in chat_sessions:
+                del chat_sessions[session_id]
+            
+            return {"status": "complete", "message": "Interview completed! Profile saved.", "profile": profile_data}
+        except Exception as ex:
+            chat_sessions[session_id].append({"role": "system", "content": f"JSON parsing failed: {ex}. Please output clean JSON wrapped in <json>...</json> tags."})
+            return {"status": "chatting", "message": "Compiling your profile JSON. Let me process that..."}
+            
+    chat_sessions[session_id].append({"role": "assistant", "content": response})
+    return {"status": "chatting", "message": response.strip()}
 
 
 @app.get("/api/companies")
