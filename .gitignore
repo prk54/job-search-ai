@@ -12,3 +12,11 @@ config/user.yml
 # OS
 .DS_Store
 Thumbs.db
+
+# Python build and cache outputs
+*.egg-info/
+__pycache__/
+*.pyc
+build/
+dist/
+

@@ -27,6 +27,10 @@ for skill in job job-build job-profile job-scan job-resume job-intel job-audit j
   fi
 done
 
+# Uninstall Python package
+python3 -m pip uninstall -y job-search-ai --break-system-packages &>/dev/null
+ok "Removed Python package (job-search-ai)"
+
 # Remove data directory (ask separately — contains user's generated PDFs)
 if [ -d "$HOME/.job-search" ]; then
   read -r -p "  Also remove ~/.job-search/ (includes your generated PDFs and profile)? [y/N] " confirm2

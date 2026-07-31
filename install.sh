@@ -115,6 +115,22 @@ else
   warn "~/.job-search/CLAUDE.md already exists — skipping"
 fi
 
+# ─── Standalone Python CLI installation ────────────────────────────────────────
+
+info "Installing job-search Python package locally..."
+if python3 -m pip install --user -e "$SCRIPT_DIR" --break-system-packages &>/dev/null; then
+  ok "Python package installed locally (job-search binary created)"
+  PY_VER=$(python3 -c "import sys; print(f'{sys.version_info.major}.{sys.version_info.minor}')")
+  USER_BIN="$HOME/Library/Python/$PY_VER/bin"
+  if [[ ":$PATH:" != *":$USER_BIN:"* ]]; then
+    warn "The 'job-search' script is installed in $USER_BIN which is not on your PATH."
+    warn "Add it to your PATH (e.g. export PATH=\"\$PATH:$USER_BIN\" in ~/.zshrc)"
+  fi
+else
+  warn "Could not install python package system-wide. Run via: python3 -m job_search.cli"
+fi
+
+
 # ─── Done ─────────────────────────────────────────────────────────────────────
 
 echo ""

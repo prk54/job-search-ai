@@ -1,11 +1,7 @@
 %-------------------------
-% Jake's Resume — Clean Structural Template
+% Jake's Resume — Clean Structural Template (Jinja2 Formatted)
 % Compatible with XeLaTeX / tectonic
 % Based on: github.com/jakeryang/resume (sb2nov base)
-%
-% DO NOT add personal content here.
-% This file defines the LaTeX preamble and commands only.
-% The /job-resume skill generates the full resume content.
 %------------------------
 
 \documentclass[letterpaper,10pt]{article}
@@ -65,43 +61,41 @@
 \newcommand{\resumeItemListStart}{\begin{itemize}[leftmargin=0.15in, label=\tiny$\bullet$, itemsep=0pt, topsep=1pt]}
 \newcommand{\resumeItemListEnd}{\end{itemize}\vspace{1pt}}
 
-%% ── Expected document structure (filled by /job-resume skill) ─────────────────
-%%
-%%  \begin{document}
-%%
-%%  \begin{center}
-%%    {\LARGE\scshape Full Name}\\[2pt]
-%%    \small
-%%    \href{mailto:email}{\faEnvelope\ email} \;$|$\;
-%%    \faPhone\ phone \;$|$\;
-%%    \href{https://linkedin.com/in/handle}{\faLinkedin\ handle} \;$|$\;
-%%    City, Country
-%%  \end{center}
-%%  \vspace{-4pt}
-%%
-%%  \section{Summary}
-%%  \small{2-3 sentence summary tailored to the role.}
-%%  \vspace{-2pt}
-%%
-%%  \section{Experience}
-%%  \resumeSubHeadingListStart
-%%    \resumeSubheading{Company}{Start -- End}{Title}{City, Country}
-%%    \resumeItemListStart
-%%      \resumeItem{Achievement with \textbf{metric}.}
-%%    \resumeItemListEnd
-%%  \resumeSubHeadingListEnd
-%%
-%%  \section{Technical Skills}
-%%  \vspace{2pt}
-%%  \begin{itemize}[leftmargin=0in, label={}, itemsep=0pt]
-%%    \small\item{
-%%      \textbf{Category:} Skill1, Skill2, Skill3\\
-%%    }
-%%  \end{itemize}
-%%
-%%  \section{Education}
-%%  \resumeSubHeadingListStart
-%%    \resumeSubheading{University (Affiliation)}{Start -- End}{Degree, Field}{City}
-%%  \resumeSubHeadingListEnd
-%%
-%%  \end{document}
+%% ── Document Body ─────────────────────────────────────────────────────────────
+
+\begin{document}
+
+\begin{center}
+    {\LARGE \scshape <<NAME>>} \\[2pt]
+    \small 
+    \href{mailto:<<EMAIL>>}{\faEnvelope\ <<EMAIL>>} \quad $|$ \quad
+    \faPhone\ <<PHONE>> \quad $|$ \quad
+    \href{<<LINKEDIN>>}{\faLinkedin\ LinkedIn} \quad $|$ \quad
+    <<LOCATION>>
+    <<WEBSITE_LINE>>
+\end{center}
+\vspace{-4pt}
+
+<<SUMMARY_SECTION>>
+
+\section{Experience}
+\resumeSubHeadingListStart
+<<EXPERIENCE>>
+\resumeSubHeadingListEnd
+
+\section{Technical Skills}
+\vspace{-6pt}
+\begin{itemize}[leftmargin=0.15in, label={}]
+    \small{\item{
+<<SKILLS>>
+    }}
+\end{itemize}
+
+\section{Education}
+\resumeSubHeadingListStart
+<<EDUCATION>>
+\resumeSubHeadingListEnd
+
+<<CERTIFICATIONS_SECTION>>
+
+\end{document}
