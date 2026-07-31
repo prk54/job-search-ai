@@ -4,6 +4,8 @@ import shutil
 import json
 import re
 import subprocess
+import threading
+import webbrowser
 from pathlib import Path
 from typing import Optional, List, Dict, Any
 
@@ -714,6 +716,22 @@ def status():
         
     db.close()
 
+@app.command()
+def ui(port: int = 8000):
+    """Launch the local keyless Web UI dashboard in your browser"""
+    import uvicorn
+    
+    url = f"http://127.0.0.1:{port}"
+    console.print(f"[bold green]✓ Starting local Web UI server...[/bold green]")
+    console.print(f"  → Opening browser at: [cyan]{url}[/cyan]")
+    
+    def open_browser():
+        webbrowser.open(url)
+        
+    threading.Timer(1.5, open_browser).start()
+    
+    uvicorn.run("job_search.core.server:app", host="127.0.0.1", port=port, log_level="warning")
+
 from datetime import datetime
 
 def main():
@@ -721,3 +739,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

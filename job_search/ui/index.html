@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>job-search-ai | Pipeline Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo-area">
+                <i class="fa-solid fa-briefcase brand-icon"></i>
+                <h2>job-search<span>.ai</span></h2>
+            </div>
+            
+            <nav class="side-nav">
+                <button class="nav-btn active" data-tab="dashboard">
+                    <i class="fa-solid fa-chart-line"></i> Dashboard
+                </button>
+                <button class="nav-btn" data-tab="profile">
+                    <i class="fa-solid fa-user-gear"></i> Profile Builder
+                </button>
+                <button class="nav-btn" data-tab="companies">
+                    <i class="fa-solid fa-building"></i> Target Companies
+                </button>
+                <button class="nav-btn" data-tab="jobs">
+                    <i class="fa-solid fa-clipboard-list"></i> Matching Roles
+                </button>
+            </nav>
+            
+            <div class="env-status">
+                <div class="status-indicator online"></div>
+                <div class="env-details">
+                    <p class="env-title">Keyless Local Mode</p>
+                    <p class="env-sub" id="llm-provider-display">Subprocess: claude</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            
+            <!-- Tab: Dashboard -->
+            <section id="tab-dashboard" class="tab-pane active">
+                <header class="tab-header">
+                    <div>
+                        <h1>Job Pipeline Funnel</h1>
+                        <p class="subtitle" id="dashboard-target-subtitle">San Francisco • Target: $200k TC</p>
+                    </div>
+                    <div class="header-actions">
+                        <button class="btn btn-primary" onclick="triggerDiscovery()"><i class="fa-solid fa-compass"></i> Discover Companies</button>
+                        <button class="btn btn-accent" onclick="triggerScan()"><i class="fa-solid fa-rotate"></i> Scan Career Boards</button>
+                    </div>
+                </header>
+
+                <!-- Funnel Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon wishlist"><i class="fa-solid fa-heart"></i></div>
+                        <div class="stat-info">
+                            <h3 id="stat-wishlist">0</h3>
+                            <p>Wishlist</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon tailored"><i class="fa-solid fa-file-pen"></i></div>
+                        <div class="stat-info">
+                            <h3 id="stat-tailored">0</h3>
+                            <p>Tailored</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon applied"><i class="fa-solid fa-paper-plane"></i></div>
+                        <div class="stat-info">
+                            <h3 id="stat-applied">0</h3>
+                            <p>Applied</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon interview"><i class="fa-solid fa-comments"></i></div>
+                        <div class="stat-info">
+                            <h3 id="stat-interviewing">0</h3>
+                            <p>Interviewing</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Pipeline Table Section -->
+                <div class="content-card">
+                    <div class="card-header">
+                        <h2>Active Application Funnel</h2>
+                        <span class="badge" id="jobs-funnel-badge">0 Active</span>
+                    </div>
+                    <div class="table-container">
+                        <table id="dashboard-jobs-table">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Role Title</th>
+                                    <th>Fit Score</th>
+                                    <th>Status</th>
+                                    <th>Generated Files</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Loaded dynamically via app.js -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Profile Builder -->
+            <section id="tab-profile" class="tab-pane">
+                <header class="tab-header">
+                    <div>
+                        <h1>Profile Builder</h1>
+                        <p class="subtitle">Your structured credentials parsed locally in SQLite database</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="saveProfileData()"><i class="fa-solid fa-save"></i> Save Profile</button>
+                </header>
+
+                <div class="profile-editor-layout">
+                    <!-- Form Details -->
+                    <div class="form-container">
+                        <div class="content-card">
+                            <h2>Contact Details</h2>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label>Full Name</label>
+                                    <input type="text" id="prof-name" placeholder="John Doe">
+                                </div>
+                                <div class="form-group">
+                                    <label>Email Address</label>
+                                    <input type="email" id="prof-email" placeholder="john.doe@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label>Phone Number</label>
+                                    <input type="text" id="prof-phone" placeholder="555-0199">
+                                </div>
+                                <div class="form-group">
+                                    <label>Location (City, State)</label>
+                                    <input type="text" id="prof-location" placeholder="San Francisco, CA">
+                                </div>
+                                <div class="form-group">
+                                    <label>LinkedIn URL</label>
+                                    <input type="text" id="prof-linkedin" placeholder="https://linkedin.com/in/username">
+                                </div>
+                                <div class="form-group">
+                                    <label>GitHub or Portfolio URL</label>
+                                    <input type="text" id="prof-github" placeholder="https://github.com/username">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-card">
+                            <h2>Professional Summary</h2>
+                            <textarea id="prof-summary" rows="4" placeholder="Brief elevator pitch highlighting achievements and experience..."></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Preview Card -->
+                    <div class="preview-panel">
+                        <div class="content-card sticky-card">
+                            <h2>Funnel Status</h2>
+                            <p class="helper-text">Once saved, a default base LaTeX PDF will be compiled under ~/.job-search/output/base-resume.pdf.</p>
+                            <div class="base-resume-area" id="base-resume-status-card">
+                                <i class="fa-solid fa-file-pdf pdf-large-icon"></i>
+                                <p class="base-pdf-title">base-resume.pdf</p>
+                                <button class="btn btn-secondary btn-sm" id="btn-view-base-pdf" disabled><i class="fa-solid fa-eye"></i> View PDF</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Target Companies -->
+            <section id="tab-companies" class="tab-pane">
+                <header class="tab-header">
+                    <div>
+                        <h1>Target Companies</h1>
+                        <p class="subtitle">Organizations dynamically monitored for active recruiting boards</p>
+                    </div>
+                    <button class="btn btn-primary" onclick="triggerDiscovery()"><i class="fa-solid fa-compass"></i> Discover Companies</button>
+                </header>
+
+                <div class="content-card">
+                    <div class="table-container">
+                        <table id="companies-table">
+                            <thead>
+                                <tr>
+                                    <th>Company</th>
+                                    <th>Careers URL</th>
+                                    <th>Board Type</th>
+                                    <th>API Slug</th>
+                                    <th>Monitoring Tier</th>
+                                    <th>Discovered Source</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- Loaded dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Tab: Matching Roles -->
+            <section id="tab-jobs" class="tab-pane">
+                <header class="tab-header">
+                    <div>
+                        <h1>Matching Positions</h1>
+                        <p class="subtitle">Openings matching location/level keywords filtered via public boards</p>
+                    </div>
+                    <button class="btn btn-accent" onclick="triggerScan()"><i class="fa-solid fa-rotate"></i> Scan Boards</button>
+                </header>
+
+                <div class="jobs-list-container" id="roles-feed-list">
+                    <!-- Dynamic feed loaded here -->
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- PDF Viewer Modal -->
+    <div class="modal" id="pdf-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="pdf-modal-title">Compiled Resume Preview</h3>
+                <button class="close-btn" onclick="closePdfModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <iframe id="pdf-iframe" src=""></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="app.js"></script>
+</body>
+</html>

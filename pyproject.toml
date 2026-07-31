@@ -14,7 +14,9 @@ dependencies = [
     "pydantic>=2.0.0",
     "sqlalchemy>=2.0.0",
     "playwright>=1.30.0",
-    "PyYAML>=6.0.0"
+    "PyYAML>=6.0.0",
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.20.0"
 ]
 
 [project.scripts]
@@ -23,3 +25,7 @@ job-search = "job_search.cli:main"
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["job_search*"]
+
+[tool.setuptools.package-data]
+job_search = ["ui/*"]
+
