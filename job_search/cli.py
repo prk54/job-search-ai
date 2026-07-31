@@ -684,7 +684,7 @@ def ui(port: int = 8000):
         
     threading.Timer(1.5, open_browser).start()
     
-    uvicorn.run("job_search.core.server:app", host="127.0.0.1", port=port, log_level="warning")
+    uvicorn.run("job_search.core.server:app", host="0.0.0.0", port=port, log_level="info")
 
 from datetime import datetime
 
