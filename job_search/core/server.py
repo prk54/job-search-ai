@@ -187,6 +187,9 @@ def update_profile(data: ProfileUpdate):
     return {"status": "success", "message": "Profile updated."}
 
 # Chat session memory store
+class ChatMessage(BaseModel):
+    message: str
+
 chat_sessions = {}
 
 @app.post("/api/interview/start")
