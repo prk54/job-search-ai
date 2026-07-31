@@ -26,6 +26,7 @@ class ClaudeDriver(BaseLLMDriver):
         try:
             result = subprocess.run(
                 cmd,
+                stdin=subprocess.DEVNULL,
                 capture_output=True,
                 text=True,
                 env=env,
@@ -36,6 +37,7 @@ class ClaudeDriver(BaseLLMDriver):
                 fallback_cmd = ["claude", "-p", prompt]
                 fallback_result = subprocess.run(
                     fallback_cmd,
+                    stdin=subprocess.DEVNULL,
                     capture_output=True,
                     text=True,
                     env=env,
@@ -62,6 +64,7 @@ class AntigravityDriver(BaseLLMDriver):
         try:
             result = subprocess.run(
                 cmd,
+                stdin=subprocess.DEVNULL,
                 capture_output=True,
                 text=True,
                 env=env,
@@ -85,6 +88,7 @@ class OllamaDriver(BaseLLMDriver):
         try:
             result = subprocess.run(
                 cmd,
+                stdin=subprocess.DEVNULL,
                 capture_output=True,
                 text=True,
                 timeout=90 # Local generation might take slightly longer
@@ -112,6 +116,7 @@ class CustomCommandDriver(BaseLLMDriver):
             result = subprocess.run(
                 command,
                 shell=True,
+                stdin=subprocess.DEVNULL,
                 capture_output=True,
                 text=True,
                 timeout=60
