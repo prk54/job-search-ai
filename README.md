@@ -5,10 +5,12 @@
 **No API keys. No servers. No extra cost.**
 
 ```
-/job-profile ~/Downloads/resume.pdf      → extracts your profile
+/job-build                               → build base resume (interview or paste)
+/job-profile ~/Downloads/resume.pdf      → extracts your profile from existing resume
 /job-scan stripe airbnb databricks       → finds open roles + TC data
 /job-resume https://careers.airbnb.com/… → tailored 1-page PDF in 60s
 /job-intel stripe "senior software engineer" → salary + interview intel from 7 portals
+/job-audit                               → audits your resume against a JD
 ```
 
 ---
@@ -17,10 +19,12 @@
 
 | Skill | Description |
 |---|---|
+| `/job-build` | Build your base profile via an interactive interview or pasting free text |
 | `/job-profile` | Upload any resume (PDF, LinkedIn export) → structured profile stored locally |
 | `/job-scan` | Scans target company career pages (via public APIs) → open roles + TC benchmarks |
 | `/job-resume` | Takes a JD URL or text + your profile → generates a keyword-tailored LaTeX PDF |
 | `/job-intel` | Aggregates salary data + interview process from 7+ portals → structured report |
+| `/job-audit` | Audits your resume for ATS parsability, keyword coverage, and bullet quality |
 
 ### Why Claude Code skills vs a web app?
 
@@ -69,6 +73,18 @@ Then inside Claude Code:
 ---
 
 ## Usage
+
+### `/job-build` — Build base resume
+
+```
+/job-build                                ← starts interactive interview wizard
+/job-build --text                         ← paste raw text directly
+/job-build --pdf-only                     ← compile base PDF from existing profile.json
+```
+
+Builds your first base profile via dynamic questions or free text, refines your work bullets into impact metrics, and compiles it to a base LaTeX PDF.
+
+---
 
 ### `/job-profile` — Parse your resume
 
@@ -217,9 +233,13 @@ To use a custom template: place your `.tex` file in `~/.job-search/templates/` a
 └── output/               ← generated PDFs and .tex files
 
 ~/.claude/skills/
+├── job.md                ← orchestrator skill
+├── job-build.md          ← /job-build skill
 ├── job-profile.md        ← /job-profile skill
 ├── job-scan.md           ← /job-scan skill
-└── job-resume.md         ← /job-resume skill
+├── job-resume.md         ← /job-resume skill
+├── job-intel.md          ← /job-intel skill
+└── job-audit.md          ← /job-audit skill
 ```
 
 ---
@@ -230,7 +250,7 @@ To use a custom template: place your `.tex` file in `~/.job-search/templates/` a
 ./uninstall.sh
 ```
 
-Removes `~/.job-search/` and the three skill files. Does not touch your Claude Code installation.
+Removes `~/.job-search/` and the seven skill files. Does not touch your Claude Code installation.
 
 ---
 

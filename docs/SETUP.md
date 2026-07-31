@@ -34,7 +34,7 @@ chmod +x install.sh && ./install.sh
 ```
 
 The installer:
-- Copies three skill files to `~/.claude/skills/`
+- Copies seven skill files to `~/.claude/skills/`
 - Creates `~/.job-search/` with templates and config stubs
 - Never overwrites existing config files (safe to re-run)
 
@@ -82,10 +82,11 @@ claude
 
 Then:
 ```
-/job-profile ~/Downloads/resume.pdf
+/job build                              # starts the interactive builder interview
+# or
+/job profile ~/Downloads/resume.pdf     # parses an existing PDF resume
 ```
-
-If successful, you'll see a summary of your extracted profile and instructions for next steps.
+If successful, you'll see a summary of your profile and instructions for next steps.
 
 ---
 
