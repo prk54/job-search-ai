@@ -52,7 +52,7 @@ yolo
 
 **In your macOS terminal (to open the compiled base PDF):**
 ```bash
-open ~/.job-search/output/base-resume.pdf
+open ~/Downloads/Rahul_Sharma_Base_Resume.pdf
 ```
 
 ---

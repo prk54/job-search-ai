@@ -116,12 +116,16 @@ Run /job-resume <JD URL> to generate a tailored resume.
 6. **Compile Base Resume PDF**
    - Read the template `~/.job-search/templates/jake.tex`.
    - Populate the LaTeX sections (contact details, summary, experience bullets, skills, education) using the newly structured, refined profile JSON data.
-   - Save the populated LaTeX code to `~/.job-search/output/base-resume.tex`.
+   - Determine target output path and naming:
+     - Convert the candidate's `name` from the refined profile JSON to snake_case (e.g., "Rahul Sharma" becomes "Rahul_Sharma").
+     - Target output directory: If an input PDF path was passed as an argument, use that directory (e.g. `~/Downloads/`). Otherwise, use the current working directory.
+     - Filename: `<candidate_name>_Base_Resume.tex` (e.g. `Rahul_Sharma_Base_Resume.tex`) and `<candidate_name>_Base_Resume.pdf`.
+   - Save the populated LaTeX code to the target directory.
    - Compile the LaTeX code to PDF using tectonic:
      ```bash
-     cd ~/.job-search/output && tectonic base-resume.tex 2>&1
+     cd <target_directory> && tectonic <candidate_name>_Base_Resume.tex 2>&1
      ```
-   - Confirm to the user that the base resume PDF has been successfully compiled and saved to `~/.job-search/output/base-resume.pdf`.
+   - Confirm to the user that the base resume PDF has been compiled and show the full path of the compiled PDF.
 
 ## Notes
 
