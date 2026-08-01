@@ -68,6 +68,14 @@ Parse a resume PDF or LinkedIn export PDF and extract a structured profile saved
 }
 ```
 
+2.5 **Refine bullets with missing metrics (Interactive Verification)**
+   - Analyze the extracted experience bullets. If the bullets are vague or lack numerical metrics (e.g., "improved database query performance", "worked on backend systems", "wrote dashboard APIs"):
+     - Show the user the list of vague bullet points that can be improved.
+     - Present 2-3 specific, polite questions asking for metrics (e.g., "By how much did database performance improve?", "How many users or daily requests did the APIs support?").
+     - Wait for the user's answers.
+     - Once the user answers, rewrite these bullets to integrate the metrics using Google's X-Y-Z formula (Accomplished [X] as measured by [Y], by doing [Z]).
+     - Proceed to validation and save the final refined profile to `~/.job-search/profile.json`.
+
 3. **Validate the extracted JSON** before saving:
    - `name` must be a non-empty string
    - `experience` must be a non-empty array with at least 1 entry
@@ -109,5 +117,5 @@ Run /job-resume <JD URL> to generate a tailored resume.
 
 - Do NOT hardcode any profile data — always extract fresh from the provided file.
 - If the PDF is a LinkedIn export, it will have a different layout than a traditional resume — handle both.
-- Preserve all bullet points from the experience section exactly as written. The user will refine them later.
+- Proactively identify and ask questions to refine experience bullet points that lack metrics before saving the final profile.
 - If a field is missing from the resume (e.g. no publications), set it to an empty array `[]`.
