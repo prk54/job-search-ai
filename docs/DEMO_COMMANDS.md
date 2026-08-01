@@ -71,8 +71,14 @@ open ~/Downloads/Rahul_Sharma_Base_Resume.pdf
 *Perform live parallel crawls to fetch postings and check compatibility.*
 
 **In the `yolo` shell:**
+*To scan all companies in your target list:*
 ```text
 /job-scan
+```
+
+*Or to target Stripe and Airbnb specifically:*
+```text
+/job-scan stripe airbnb
 ```
 
 ---
