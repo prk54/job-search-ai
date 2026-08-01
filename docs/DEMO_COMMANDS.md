@@ -63,7 +63,7 @@ open ~/.job-search/output/base-resume.pdf
 
 **In the `yolo` shell:**
 ```text
-/job-resume https://boards.greenhouse.io/stripe/jobs/7826765
+/job-resume https://boards.greenhouse.io/stripe/jobs/8070949
 ```
 
 **In your macOS terminal (to open the tailored Stripe PDF):**
@@ -78,7 +78,7 @@ open ~/.job-search/output/resume_stripe.pdf
 
 **In the `yolo` shell:**
 ```text
-/job-resume https://careers.airbnb.com/jobs/staff-software-engineer-india/
+/job-resume https://boards.greenhouse.io/airbnb/jobs/8053132
 ```
 
 **In your macOS terminal (to open the tailored Airbnb PDF):**
