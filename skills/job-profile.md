@@ -113,6 +113,16 @@ Run /job-scan to find matching roles at target companies.
 Run /job-resume <JD URL> to generate a tailored resume.
 ```
 
+6. **Compile Base Resume PDF**
+   - Read the template `~/.job-search/templates/jake.tex`.
+   - Populate the LaTeX sections (contact details, summary, experience bullets, skills, education) using the newly structured, refined profile JSON data.
+   - Save the populated LaTeX code to `~/.job-search/output/base-resume.tex`.
+   - Compile the LaTeX code to PDF using tectonic:
+     ```bash
+     cd ~/.job-search/output && tectonic base-resume.tex 2>&1
+     ```
+   - Confirm to the user that the base resume PDF has been successfully compiled and saved to `~/.job-search/output/base-resume.pdf`.
+
 ## Notes
 
 - Do NOT hardcode any profile data — always extract fresh from the provided file.
