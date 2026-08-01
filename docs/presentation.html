@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E2E Job Search AI Skill Suite | Sourcing Presentation</title>
+    <title>Job Search AI Skill Suite | E2E Sourcing Presentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -470,12 +470,61 @@
             </div>
         </div>
 
-        <!-- Slide 3: Why Tailored Resumes Matter -->
-        <div class="slide" id="slide-3-tailor">
+        <!-- Slide 3: The Base Resume -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">The Starting Point</span>
+                    <h2>2. The Base Resume: Your Foundation</h2>
+                </div>
+                <i class="fa-solid fa-file-pdf" style="font-size: 2.25rem; color: var(--primary);"></i>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left" style="flex: 1.2;">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-file-import"></i>
+                            <div class="info-card-text">
+                                <h3>Profile Parsing</h3>
+                                <p>Instead of manually rewriting details, the assistant reads your existing PDF (like a LinkedIn export or old resume) using: <br>
+                                <code>/job profile ~/Downloads/Profile.pdf</code></p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-code"></i>
+                            <div class="info-card-text">
+                                <h3>Auto-Structuring Data</h3>
+                                <p>The assistant parses text and extracts your experiences, skills, education, and contact info into a clean, structured data file.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <div class="info-card-text">
+                                <h3>Compiling the Base PDF</h3>
+                                <p>Once parsed, the assistant instantly compiles your first base resume PDF. This serves as the master copy that we will use to tailor for target roles.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-content-right" style="flex: 0.8; display: flex; justify-content: center; align-items: center;">
+                    <div class="glass-panel text-center" style="border-left: 4px solid var(--primary); text-align: center; width: 100%;">
+                        <i class="fa-solid fa-folder-open" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h4 style="color:var(--text-primary); margin-bottom: 0.5rem;">Prateek Lalwani Base Resume</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 1rem;">
+                            Profile.pdf has been successfully parsed and base-resume.pdf compiled!
+                        </p>
+                        <code style="font-size:0.8rem;">~/.job-search/output/base-resume.pdf</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Why Tailored Resumes Matter -->
+        <div class="slide" id="slide-4">
             <div class="slide-header">
                 <div>
                     <span class="slide-tag">Job Market Reality</span>
-                    <h2>2. Why Tailored Resumes Matter Today</h2>
+                    <h2>3. Why Tailored Resumes Matter Today</h2>
                 </div>
                 <i class="fa-solid fa-file-signature" style="font-size: 2.25rem; color: var(--accent);"></i>
             </div>
@@ -517,11 +566,59 @@
             </div>
         </div>
 
-         <div class="slide" id="slide-5">
+        <!-- Slide 5: Portals vs. ATS -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Recruiting Landscape</span>
+                    <h2>4. Job Portals vs. Applicant Tracking Systems (ATS)</h2>
+                </div>
+                <i class="fa-solid fa-sitemap" style="font-size: 2.25rem; color: var(--primary);"></i>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left" style="flex: 1.2;">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-globe"></i>
+                            <div class="info-card-text">
+                                <h3>Job Portals (LinkedIn, Naukri, Indeed)</h3>
+                                <p>Public matching search engines where candidates go to discover job openings, and recruiters go to search and headhunt profiles.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-database"></i>
+                            <div class="info-card-text">
+                                <h3>Applicant Tracking Systems - ATS (Greenhouse, Lever, Workday)</h3>
+                                <p>Internal database software companies use to collect, scan, track, and score applications. This is where your resume gets parsed by algorithms.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-arrow-right-arrow-left"></i>
+                            <div class="info-card-text">
+                                <h3>How They Differ (The Core Link)</h3>
+                                <p>You discover and apply for the job on a public **Portal**, but you get processed, filtered, or hired inside the private **ATS** database.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-content-right" style="flex: 0.8; display: flex; justify-content: center; align-items: center;">
+                    <div class="glass-panel text-center" style="border-left: 4px solid var(--primary); text-align: center;">
+                        <i class="fa-solid fa-circle-info" style="font-size: 3rem; color: var(--primary); margin-bottom: 1rem;"></i>
+                        <h4 style="color:var(--text-primary); margin-bottom: 0.5rem;">One-Line Takeaway</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4;">
+                            You find the job on a Portal, but you get filtered out or hired inside the ATS. Your resume must speak the language of both.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: The Automated Skill Suite -->
+         <div class="slide" id="slide-6">
             <div class="slide-header">
                 <div>
                     <span class="slide-tag">E2E Automation</span>
-                    <h2>4. The Automated Skill Suite</h2>
+                    <h2>5. The Automated Skill Suite</h2>
                 </div>
                 <i class="fa-solid fa-terminal" style="font-size: 2.25rem; color: var(--success);"></i>
             </div>
@@ -575,12 +672,12 @@
             </div>
         </div>
 
-        <!-- Slide 4: Simplify vs Content -->
-        <div class="slide" id="slide-6">
+        <!-- Slide 7: Simplify vs Content -->
+        <div class="slide" id="slide-7">
             <div class="slide-header">
                 <div>
                     <span class="slide-tag">Synergy Overview</span>
-                    <h2>5. Autofill Extensions vs. Content Tailoring</h2>
+                    <h2>6. Autofill Extensions vs. Content Tailoring</h2>
                 </div>
                 <i class="fa-solid fa-shuffle" style="font-size: 2.25rem; color: var(--accent);"></i>
             </div>
@@ -631,11 +728,12 @@
             </div>
         </div>
 
-        <div class="slide" id="slide-7">
+        <!-- Slide 8: Web Prompts -->
+        <div class="slide" id="slide-8">
             <div class="slide-header">
                 <div>
                     <span class="slide-tag">Universal Accessibility</span>
-                    <h2>6. Prompt Templates (For Web AI Chat)</h2>
+                    <h2>7. Prompt Templates (For Web AI Chat)</h2>
                 </div>
                 <i class="fa-solid fa-copy" style="font-size: 2.25rem; color: var(--primary);"></i>
             </div>
@@ -683,12 +781,12 @@ Instructions:
             </div>
         </div>
 
-        <!-- Slide 6: Apollo Sourcing & Outreach -->
-        <div class="slide" id="slide-8">
+        <!-- Slide 9: Apollo Sourcing & Outreach -->
+        <div class="slide" id="slide-9">
             <div class="slide-header">
                 <div>
                     <span class="slide-tag">Outbound Execution</span>
-                    <h2>7. Apollo Sourcing & Cold Outreach</h2>
+                    <h2>8. Apollo Sourcing & Cold Outreach</h2>
                 </div>
                 <i class="fa-solid fa-paper-plane" style="font-size: 2.25rem; color: var(--primary);"></i>
             </div>
@@ -742,7 +840,7 @@ Instructions:
         </div>
 
         <div class="controls">
-            <div class="slide-counter" id="counter-display">1 / 6</div>
+            <div class="slide-counter" id="counter-display">1 / 9</div>
             <button class="control-btn" id="prev-btn" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="control-btn" id="next-btn" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
         </div>
@@ -786,6 +884,12 @@ Instructions:
         function nextSlide() {
             if (activeIdx < slides.length - 1) {
                 showSlide(activeIdx + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (activeIdx > 0) {
+                showSlide(activeIdx - 1);
             }
         }
 
