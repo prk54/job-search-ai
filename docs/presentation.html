@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>job-search-ai | Presentation Deck</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #09090b;
+            --bg-card: rgba(20, 20, 23, 0.6);
+            --border-color: #27272a;
+            --text-primary: #f4f4f5;
+            --text-secondary: #a1a1aa;
+            --primary: #3b82f6;
+            --accent: #8b5cf6;
+            --success: #10b981;
+            --font-sans: 'Outfit', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: var(--font-sans);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+        }
+
+        /* Slide Container */
+        .deck-container {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+        }
+
+        /* Slides */
+        .slide {
+            position: absolute;
+            width: 90%;
+            max-width: 1100px;
+            height: 80vh;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 24px;
+            padding: 4rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            backdrop-filter: blur(15px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            opacity: 0;
+            transform: translateX(100px);
+            pointer-events: none;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .slide.previous {
+            opacity: 0;
+            transform: translateX(-100px);
+        }
+
+        /* Slide Typography */
+        .slide-header {
+            margin-bottom: 2rem;
+        }
+
+        .slide-tag {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide h2 {
+            font-size: 2.25rem;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+            color: #fff;
+        }
+
+        .slide-body {
+            flex-grow: 1;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .slide-content-left {
+            flex: 1.2;
+        }
+
+        .slide-content-right {
+            flex: 0.8;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Lists and bullets */
+        ul.slide-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        ul.slide-list li {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            line-height: 1.4;
+        }
+
+        ul.slide-list li strong {
+            color: #fff;
+        }
+
+        ul.slide-list li i {
+            margin-top: 0.25rem;
+            color: var(--primary);
+        }
+
+        /* Visual components */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            width: 100%;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
+        }
+
+        .glow-box {
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .glow-box::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border-radius: 16px;
+            border: 2px solid transparent;
+            background: linear-gradient(135deg, var(--primary), var(--accent)) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask-composite: exclude;
+            pointer-events: none;
+        }
+
+        code {
+            font-family: var(--font-mono);
+            background-color: rgba(255, 255, 255, 0.05);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.95em;
+            color: var(--accent);
+        }
+
+        .code-block {
+            display: block;
+            font-family: var(--font-mono);
+            background-color: #121214;
+            border: 1px solid var(--border-color);
+            padding: 1.25rem;
+            border-radius: 12px;
+            color: #f4f4f5;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            overflow-x: auto;
+            margin-top: 1rem;
+        }
+
+        .code-block span.comment { color: #71717a; }
+        .code-block span.cmd { color: var(--primary); }
+
+        /* Stepper roadmap */
+        .stepper-flow {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            width: 100%;
+        }
+
+        .step-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 0.75rem 1rem;
+        }
+
+        .step-num {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Controls Footer */
+        .deck-footer {
+            height: 80px;
+            border-top: 1px solid var(--border-color);
+            padding: 0 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: rgba(9, 9, 11, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .control-btn {
+            background: none;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .control-btn:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-secondary);
+        }
+
+        .progress-indicator {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .progress-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background-color: var(--border-color);
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .progress-dot.active {
+            background-color: var(--primary);
+            width: 24px;
+            border-radius: 4px;
+        }
+
+        .slide-counter {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            font-family: var(--font-mono);
+        }
+
+        /* Brand logo */
+        .brand-watermark {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+        }
+
+        .brand-watermark span { color: var(--primary); }
+
+        /* Title slide layout */
+        .slide-title-view {
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .slide-title-view h1 {
+            font-size: 5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .slide-title-view p.subtitle {
+            font-size: 1.5rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            line-height: 1.4;
+            margin-bottom: 2.5rem;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="deck-container">
+        
+        <!-- Slide 1: Title -->
+        <div class="slide slide-title-view active" id="slide-1">
+            <span class="slide-tag">E2E Sourcing Pipeline</span>
+            <h1>job-search<span>.ai</span></h1>
+            <p class="subtitle">An automated, keyless, local agent pipeline to re-engineer your application funnel.</p>
+            <div class="glass-panel" style="max-width: 500px; padding: 1.25rem;">
+                <code style="color:#fff; font-size: 1.1rem;">job-search ui</code>
+            </div>
+        </div>
+
+        <!-- Slide 2: The LinkedIn Loop -->
+        <div class="slide" id="slide-2">
+            <div class="slide-header">
+                <span class="slide-tag">Top of Funnel</span>
+                <h2>1. The LinkedIn Profile Loop</h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="slide-list">
+                        <li>
+                            <i class="fa-solid fa-arrow-trend-up"></i>
+                            <div>
+                                <strong>Search Ranking Priority:</strong> Recruiters source directly using keyword queries. Optimization is about index ranking, not just visual format.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-pen-nib"></i>
+                            <div>
+                                <strong>Headline Formula:</strong> Replace generic titles with value propositions: <br>
+                                <code>Role | Tech stack | Quantifiable Accomplishments</code>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-user-check"></i>
+                            <div>
+                                <strong>Profile Sourcing Hacks:</strong> Pin top 3 endorsed keywords, claim custom URL footprints, and flag 'Open to Work' in recruiter-only mode.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="glass-panel glow-box">
+                        <h4 style="margin-bottom:1rem; color:var(--primary);"><i class="fa-solid fa-comments"></i> In-App Skill</h4>
+                        <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:1rem;">Call direct outreach and bio summarizers inside your console:</p>
+                        <code style="display:block; text-align:center;">/job-linkedin summary</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: E2E Terminal Automation -->
+        <div class="slide" id="slide-3">
+            <div class="slide-header">
+                <span class="slide-tag">Local Agent Engine</span>
+                <h2>2. E2E CLI & Claude Code Skills</h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="slide-list">
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>Conversational Build:</strong> AI interview dynamically extracts experiences using STAR/XYZ metrics to generate base schema files.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>Parallel Board Scans:</strong> Greenhouse & Lever boards parsed concurrently to score matching positions.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-circle-check"></i>
+                            <div>
+                                <strong>LaTeX Compilation:</strong> Custom LaTeX resume bullet tailored to JD keywords and compiled instantly using <code>tectonic</code>.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="stepper-flow">
+                        <div class="step-item"><div class="step-num">1</div><p style="font-size:0.85rem;"><b>/job build</b> (Conversational Bio)</p></div>
+                        <div class="step-item"><div class="step-num">2</div><p style="font-size:0.85rem;"><b>/job scan</b> (Parallel API parser)</p></div>
+                        <div class="step-item"><div class="step-num">3</div><p style="font-size:0.85rem;"><b>/job resume & cover</b> (Tectonic compile)</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Content vs Form -->
+        <div class="slide" id="slide-4">
+            <div class="slide-header">
+                <span class="slide-tag">Synergy Strategy</span>
+                <h2>3. Content Tailoring vs. Form Autofills</h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="slide-list">
+                        <li>
+                            <i class="fa-solid fa-list-check"></i>
+                            <div>
+                                <strong>Form Autofills (e.g. Simplify):</strong> Automates portal text fields (name, phone, demographics, work histories).
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-magic"></i>
+                            <div>
+                                <strong>Content Tailoring (job-search):</strong> Customizes experience bullets to match JD keywords, builds cover letters, compiles PDFs.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-handshake"></i>
+                            <div>
+                                <strong>The Perfect Integration:</strong> Our tool structures the content and compiles customized resumes -> Autofill extensions load and submit.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="glass-panel" style="border-left: 4px solid var(--success);">
+                        <h4 style="margin-bottom:0.5rem; color:#fff;">Form Automation</h4>
+                        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.5rem;">Playwright headed browser automation triggers dynamically:</p>
+                        <code>/job apply &lt;url&gt;</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Sourcing & Outreach -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <span class="slide-tag">Recruiter Outbound</span>
+                <h2>4. Apollo Sourcing & Cold Outreach</h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="slide-list">
+                        <li>
+                            <i class="fa-solid fa-magnifying-glass-plus"></i>
+                            <div>
+                                <strong>Apollo.io Sourcing:</strong> Extract recruiter and hiring manager emails and direct phone numbers straight from company LinkedIn listings.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <div>
+                                <strong>Targeted Messaging:</strong> Send personalized emails referencing the application and attaching the tailored resume.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-bolt"></i>
+                            <div>
+                                <strong>Outreach Generator:</strong> Run command tools to write connection notes and cold emails matching recruiter metrics.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="glass-panel glow-box">
+                        <h4 style="margin-bottom:0.75rem; color:var(--accent);"><i class="fa-solid fa-envelope"></i> Command Example</h4>
+                        <code style="display:block; text-align:center; font-size:0.8rem;">/job-linkedin outreach stripe "SWE"</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: No-Code Helpers -->
+        <div class="slide" id="slide-6">
+            <div class="slide-header">
+                <span class="slide-tag">Web Assistants</span>
+                <h2>5. No-CLI Helper Web Prompts</h2>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <ul class="slide-list">
+                        <li>
+                            <i class="fa-solid fa-window-restore"></i>
+                            <div>
+                                <strong>Standard Web UIs:</strong> Use ChatGPT, Claude, or Copilot web interfaces directly.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-copy"></i>
+                            <div>
+                                <strong>Prompt Templates:</strong> Pre-formatted templates inside <code>docs/WEB_PROMPTS.md</code>.
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fa-solid fa-shield-halved"></i>
+                            <div>
+                                <strong>Secure Metrics formatting:</strong> Prompts enforce Google STAR/XYZ structures and keyword matching safely in markdown blocks.
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="slide-content-right">
+                    <div class="glass-panel" style="text-align:center;">
+                        <i class="fa-solid fa-terminal" style="font-size:2.5rem; color:var(--primary); margin-bottom:1rem;"></i>
+                        <p style="font-size:0.9rem; font-weight:600;">No setup needed</p>
+                        <p style="font-size:0.8rem; color:var(--text-secondary);">Copy prompts from docs/WEB_PROMPTS.md</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Footer -->
+    <footer class="deck-footer">
+        <div class="brand-watermark">
+            <i class="fa-solid fa-briefcase" style="color:var(--primary)"></i> job-search<span>.ai</span>
+        </div>
+        
+        <div class="progress-indicator" id="dots-container">
+            <!-- Rendered dynamically -->
+        </div>
+
+        <div class="controls">
+            <div class="slide-counter" id="counter-display">1 / 6</div>
+            <button class="control-btn" id="prev-btn" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="control-btn" id="next-btn" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
+        </div>
+    </footer>
+
+    <script>
+        const slides = document.querySelectorAll(".slide");
+        const dotsContainer = document.getElementById("dots-container");
+        const counterDisplay = document.getElementById("counter-display");
+        let activeIdx = 0;
+
+        // Render progress dots
+        slides.forEach((s, idx) => {
+            const dot = document.createElement("div");
+            dot.className = `progress-dot ${idx === 0 ? 'active' : ''}`;
+            dot.addEventListener("click", () => showSlide(idx));
+            dotsContainer.appendChild(dot);
+        });
+
+        const dots = document.querySelectorAll(".progress-dot");
+
+        function showSlide(index) {
+            if (index < 0 || index >= slides.length) return;
+            
+            slides.forEach((slide, idx) => {
+                slide.classList.remove("active", "previous");
+                dots[idx].classList.remove("active");
+                
+                if (idx === index) {
+                    slide.classList.add("active");
+                    dots[idx].classList.add("active");
+                } else if (idx < index) {
+                    slide.classList.add("previous");
+                }
+            });
+
+            activeIdx = index;
+            counterDisplay.innerText = `${activeIdx + 1} / ${slides.length}`;
+        }
+
+        function nextSlide() {
+            if (activeIdx < slides.length - 1) {
+                showSlide(activeIdx + 1);
+            }
+        }
+
+        function prevSlide() {
+            if (activeIdx > 0) {
+                showSlide(activeIdx - 1);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener("keydown", (e) => {
+            if (e.key === "ArrowRight" || e.key === "Space" || e.key === " ") {
+                nextSlide();
+            } else if (e.key === "ArrowLeft") {
+                prevSlide();
+            }
+        });
+    </script>
+</body>
+</html>
