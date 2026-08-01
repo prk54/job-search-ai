@@ -13,7 +13,7 @@ gantt
     axisFormat %M
     
     LinkedIn Profile Optimization    :active, 0, 3m
-    Claude Code Skills Live Demo     :crit, 3, 10m
+    Terminal Agent Skills Live Demo  :crit, 3, 10m
     Autofill (Simplify) Integration  : 10, 13m
     Web Prompt Templates (No-CLI)    : 13, 16m
     Recruiter Sourcing (Apollo.io)   : 16, 20m
@@ -38,7 +38,7 @@ gantt
 ## 2. Live Demo of E2E Skills Package (3:00 - 10:00)
 **Key Message**: *Watch how we automate database discovery, role extraction, LLM tailoring, and browser auto-fill locally, keyless, in under 2 minutes.*
 
-* **Dashboard Start**: Run `claude` and run `/job`. Point out the clean state.
+* **Dashboard Start**: Open the terminal agent and run `/job`. Point out the clean state.
 * **Interactive Chat Build**: Run `/job build`. Answer 2 conversational questions to show the Google STAR/XYZ formula bullet refinement live in the terminal.
 * **Target Board Scan**: Run `/job discover` then `/job scan`. Explain that Greenhouse and Lever APIs are queried in parallel to fetch open positions and match compatibility scores.
 * **Subprocess Tailoring**: Run `/job resume <URL>`. Show the Tectonic XeLaTeX compilation console log. Open the output PDF (`open ~/.job-search/output/resume_stripe.pdf`) showing the custom compiled copy.
@@ -58,7 +58,7 @@ gantt
 ---
 
 ## 4. Helper Prompts for Web UIs (No-CLI Users) (13:00 - 16:00)
-**Key Message**: *You don't need a terminal CLI to leverage this pipeline. You can use standard LLM web assistants (ChatGPT, Claude Web UI, Copilot) with templates.*
+**Key Message**: *You don't need a terminal CLI to leverage this pipeline. You can use standard LLM web assistants (ChatGPT, Gemini, Claude, Copilot) with templates.*
 
 * Show the **[WEB_PROMPTS.md](file:///Users/prateeklalwani/job-search-ai/docs/WEB_PROMPTS.md)** guide in your repository.
 * **Explain**: Show how copy-pasting the *Resume Experience Tailoring* prompt tells standard web assistants to match their CV bullets to a JD, keeping it safe, clean, and metrics-driven without terminal setups.
