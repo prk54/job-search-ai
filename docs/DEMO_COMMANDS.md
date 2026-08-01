@@ -34,12 +34,12 @@ yolo
 /job-build
 ```
 
-### Option B: Quick Import from LinkedIn Export
-*Show how the assistant parses an existing PDF and structures it in seconds.*
+### Option B: Quick Import from Unstructured PDF
+*Show how the assistant parses an unstructured, metric-less PDF and structures it in seconds.*
 
 **In the `yolo` shell:**
 ```text
-/job-profile ~/Downloads/Profile.pdf
+/job-profile ~/Downloads/Rahul_Sharma_Resume.pdf
 ```
 
 **In your macOS terminal (to open the compiled base PDF):**
