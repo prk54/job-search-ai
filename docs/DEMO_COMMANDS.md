@@ -42,6 +42,14 @@ yolo
 /job-profile ~/Downloads/Rahul_Sharma_Resume.pdf
 ```
 
+**Draft Response to copy-paste when prompted for metrics:**
+```text
+1. Supported over 50,000 active daily users and built 15 dashboard APIs.
+2. Latency reduced by 40%, dropping query times from 1.5s to 900ms.
+3. Post-release bugs decreased by 30%.
+4. Achieved 88% unit test coverage for the React/Node.js app.
+```
+
 **In your macOS terminal (to open the compiled base PDF):**
 ```bash
 open ~/.job-search/output/base-resume.pdf
