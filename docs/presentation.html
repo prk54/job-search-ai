@@ -145,6 +145,11 @@
             gap: 1.25rem;
         }
 
+        .info-grid.grid-2col {
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
         .info-card {
             background: rgba(255, 255, 255, 0.5);
             border: 1px solid var(--border-color);
@@ -414,28 +419,28 @@
                 <i class="fa-brands fa-linkedin" style="font-size: 2.5rem; color: #0a66c2;"></i>
             </div>
             <div class="slide-body">
-                <div class="slide-content-left">
-                    <div class="info-grid">
+                <div class="slide-content-left" style="flex: 1.5;">
+                    <div class="info-grid grid-2col">
                         <div class="info-card">
                             <i class="fa-solid fa-users"></i>
                             <div class="info-card-text">
                                 <h3>The Scale of LinkedIn</h3>
-                                <p>With over <b>1 Billion members globally</b> (including <b>120+ Million in India</b>) and over <b>20 Million active job listings</b>, LinkedIn is where recruiters search first.</p>
+                                <p>With over <b>1 Billion members globally</b> (including <b>120+ Million in India</b>) and over <b>20 Million active jobs</b>, LinkedIn is where recruiters search first.</p>
                             </div>
                         </div>
                         <div class="info-card">
                             <i class="fa-solid fa-key"></i>
                             <div class="info-card-text">
-                                <h3>Keywords are Everything (Feeding the Algorithm)</h3>
-                                <p>LinkedIn's search engine runs entirely on keywords. Recruiters filter profiles by specific skill names. You must place these keywords strategically in your headline, summary, and experience to feed the search algorithm.</p>
+                                <h3>Keywords are Everything</h3>
+                                <p>LinkedIn searches run entirely on keywords. Recruiters filter by specific skills. Place keywords in your headline, summary, and experience to feed the algorithm.</p>
                             </div>
                         </div>
                         <div class="info-card">
                             <i class="fa-solid fa-signature"></i>
                             <div class="info-card-text">
                                 <h3>Headline Indexing Formula</h3>
-                                <p>Avoid generic titles like 'Engineer at X'. Use the indexing formula: <br>
-                                <code>Role Title | Core Stack Keywords | Quantifiable Value Proposition</code></p>
+                                <p>Avoid generic titles. Use the indexing formula: <br>
+                                <code>Role | Skills | Quantifiable Accomplishments</code></p>
                             </div>
                         </div>
                         <div class="info-card">
@@ -443,13 +448,13 @@
                             <div class="info-card-text">
                                 <h3>3 Sourcing Hacks</h3>
                                 <p>1. Enable 'Open to Work' (Recruiter-Only). <br>
-                                2. Pin your top 3 target skills (endorsements rank higher in search filters). <br>
-                                3. Set a clean, short custom URL path.</p>
+                                2. Pin your top 3 target skills to rank higher in searches. <br>
+                                3. Set a clean, custom URL path.</p>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="slide-content-right">
+                <div class="slide-content-right" style="flex: 0.5;">
                     <div class="glass-panel" style="border-left: 4px solid var(--primary);">
                         <h4 style="color:var(--text-primary); margin-bottom: 0.75rem;"><i class="fa-solid fa-shield-halved"></i> LinkedIn Skill Block</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
