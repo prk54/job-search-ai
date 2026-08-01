@@ -68,7 +68,7 @@ ok "Directories ready"
 info "Installing skills to ~/.claude/skills/ ..."
 mkdir -p "$SKILLS_DIR"
 
-for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply job-discover; do
+for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply job-discover job-linkedin; do
   src="$SCRIPT_DIR/skills/${skill}.md"
   dst="$SKILLS_DIR/${skill}.md"
   if [ -f "$dst" ]; then
