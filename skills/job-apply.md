@@ -1,3 +1,8 @@
+---
+name: job-apply
+description: Automate submitting applications on company portals.
+---
+
 # /job-apply — Auto-Fill Job Applications
 
 Automatically opens a browser window, navigates to the job posting, fills in your profile details (Name, Email, Phone, Location, LinkedIn, GitHub, Portfolio), uploads the correct tailored resume PDF, and leaves the browser open for you to verify and submit.

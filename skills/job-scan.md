@@ -1,3 +1,8 @@
+---
+name: job-scan
+description: Scan target companies for open roles matching your configured seniority and location.
+---
+
 # /job-scan — Find Open Roles + TC Data at Target Companies
 
 Scan target companies for open roles matching your configured seniority and location, fetch TC data from levels.fyi, and output a prioritised table with profile fit scores.

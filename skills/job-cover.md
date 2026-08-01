@@ -1,3 +1,8 @@
+---
+name: job-cover
+description: Draft a highly personalized cover letter for a target role.
+---
+
 # /job-cover — Generate Tailored LaTeX Cover Letter PDF
 
 Generate a professional, keyword-tailored cover letter in LaTeX, compiled to a single-page PDF that visually matches the aesthetic of your resume template.

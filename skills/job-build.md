@@ -1,3 +1,8 @@
+---
+name: job-build
+description: Build your first base resume from scratch.
+---
+
 # /job-build — Build Base Profile & Resume PDF
 
 Build your first base resume from scratch. This skill helps you construct a structured profile (`~/.job-search/profile.json`) either by pasting unstructured free text or through an interactive, step-by-step interview in the chat, and compiles it into a clean, single-page LaTeX base PDF resume.

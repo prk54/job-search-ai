@@ -1,3 +1,8 @@
+---
+name: job-intel
+description: Fetch interview questions and total compensation benchmarks for a company.
+---
+
 # /job-intel — Salary + Interview Intelligence from Multiple Portals
 
 Aggregates real salary data and interview process intel for a company + role from Levels.fyi, Glassdoor, Blind, Leetcode Discuss, AmbitionBox, Reddit, and more. Outputs a structured report so you walk into every interview knowing exactly what to expect and what to negotiate.

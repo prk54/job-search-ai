@@ -1,3 +1,8 @@
+---
+name: job
+description: Single entry point for the entire job search workflow. Understands natural language, checks current state, and chains the right sub-skills automatically.
+---
+
 # /job — Umbrella Orchestrator
 
 Single entry point for the entire job search workflow. Understands natural language, checks current state, and chains the right sub-skills automatically. You never need to remember which individual skill to call.

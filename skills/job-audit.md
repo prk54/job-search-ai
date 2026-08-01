@@ -1,3 +1,8 @@
+---
+name: job-audit
+description: Evaluate your tailored resume against target requirements and score its ATS parseability.
+---
+
 # /job-audit — Resume Audit
 
 Audit a generated resume PDF for ATS parsability, keyword coverage, bullet quality, and common mistakes. Outputs a scored report with specific fixes.

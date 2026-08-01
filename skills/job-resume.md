@@ -1,3 +1,8 @@
+---
+name: job-resume
+description: Automatically rewrites resume highlights to fit a specific job description.
+---
+
 # /job-resume — Generate Tailored LaTeX Resume PDF
 
 Given a JD (URL or pasted text) and the stored profile, generate a keyword-injected, ATS-optimised LaTeX resume compiled to a single-page PDF.

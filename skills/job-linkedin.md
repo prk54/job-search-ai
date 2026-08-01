@@ -1,3 +1,8 @@
+---
+name: job-linkedin
+description: Optimize your LinkedIn profile and generate recruiter outbound messages.
+---
+
 # /job-linkedin — LinkedIn Profile Optimization & Outreach Guide
 
 A guide to optimizing your LinkedIn presence for recruiters and sourcers, paired with cold outreach templates to target hiring teams directly.

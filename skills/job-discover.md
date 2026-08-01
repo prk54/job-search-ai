@@ -1,3 +1,8 @@
+---
+name: job-discover
+description: Scan job boards and career pages to find matches for your profile.
+---
+
 # /job-discover — Discover Target Companies Dynamically
 
 Automatically scans a seed database of 50+ tier-1 tech companies and searches live job board directories (Greenhouse, Lever) for active job postings in your target city. It aggregates their metadata, creates their API slugs, and compiles them directly into your `~/.job-search/companies.yml` file for scanning.

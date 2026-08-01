@@ -1,3 +1,8 @@
+---
+name: job-profile
+description: Parse a resume PDF or LinkedIn export PDF and extract a structured profile.
+---
+
 # /job-profile — Parse Resume & Build Profile
 
 Parse a resume PDF or LinkedIn export PDF and extract a structured profile saved to `~/.job-search/profile.json`. This is the foundation for all other job-search skills.
