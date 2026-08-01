@@ -65,17 +65,24 @@ ok "Directories ready"
 
 # ─── Copy skills ───────────────────────────────────────────────────────────────
 
-info "Installing skills to ~/.claude/skills/ ..."
+info "Installing skills to ~/.claude/skills/ and ~/.gemini/antigravity-cli/skills/ ..."
 mkdir -p "$SKILLS_DIR"
+AGY_SKILLS_DIR="$HOME/.gemini/antigravity-cli/skills"
+mkdir -p "$AGY_SKILLS_DIR"
 
 for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply job-discover job-linkedin; do
   src="$SCRIPT_DIR/skills/${skill}.md"
+  
+  # Claude Code destination
   dst="$SKILLS_DIR/${skill}.md"
-  if [ -f "$dst" ]; then
-    warn "Skill $skill already exists — overwriting"
-  fi
   cp "$src" "$dst"
-  ok "Installed /${skill}"
+  
+  # Antigravity CLI destination (folder/SKILL.md)
+  agy_dst_dir="$AGY_SKILLS_DIR/${skill}"
+  mkdir -p "$agy_dst_dir"
+  cp "$src" "$agy_dst_dir/SKILL.md"
+  
+  ok "Installed /${skill} (Claude & Antigravity)"
 done
 
 info "Copying LaTeX templates and seed lists..."
