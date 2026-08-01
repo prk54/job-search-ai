@@ -23,8 +23,19 @@ yolo
 
 ---
 
-## 📄 Step 2: Show Base Resume Generation
-*Demonstrate how the tool parses a PDF into JSON and compiles a base XeLaTeX resume.*
+## 📄 Step 2: Build or Import Your Base Resume
+*Demonstrate the two ways to establish your base profile and resume.*
+
+### Option A: Conversational Interactive Interview (STAR Builder)
+*Show how the assistant interviews you, extracts metrics, and refines your bullets.*
+
+**In the `yolo` shell:**
+```text
+/job-build
+```
+
+### Option B: Quick Import from LinkedIn Export
+*Show how the assistant parses an existing PDF and structures it in seconds.*
 
 **In the `yolo` shell:**
 ```text
