@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>job-search-ai | Presentation Deck</title>
+    <title>job-search-ai | E2E Job Sourcing Presentation</title>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --bg-main: #09090b;
-            --bg-card: rgba(20, 20, 23, 0.6);
+            --bg-card: rgba(20, 20, 23, 0.7);
             --border-color: #27272a;
             --text-primary: #f4f4f5;
             --text-secondary: #a1a1aa;
@@ -18,6 +18,7 @@
             --success: #10b981;
             --font-sans: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         * {
@@ -35,8 +36,8 @@
             display: flex;
             flex-direction: column;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.08) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.08) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.06) 0px, transparent 50%);
         }
 
         /* Slide Container */
@@ -52,222 +53,247 @@
         /* Slides */
         .slide {
             position: absolute;
-            width: 90%;
-            max-width: 1100px;
-            height: 80vh;
+            width: 92%;
+            max-width: 1200px;
+            height: 82vh;
             background: var(--bg-card);
             border: 1px solid var(--border-color);
             border-radius: 24px;
-            padding: 4rem;
+            padding: 3.5rem 4rem;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            backdrop-filter: blur(15px);
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(20px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
             opacity: 0;
-            transform: translateX(100px);
+            transform: scale(0.95) translateY(30px);
             pointer-events: none;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: var(--transition);
         }
 
         .slide.active {
             opacity: 1;
-            transform: translateX(0);
+            transform: scale(1) translateY(0);
             pointer-events: auto;
         }
 
         .slide.previous {
             opacity: 0;
-            transform: translateX(-100px);
+            transform: scale(0.95) translateY(-30px);
         }
 
-        /* Slide Typography */
+        /* Slide Headers */
         .slide-header {
-            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 1.5rem;
+            margin-bottom: 1.5rem;
         }
 
         .slide-tag {
-            font-size: 0.875rem;
-            font-weight: 600;
+            font-size: 0.75rem;
+            font-weight: 700;
             color: var(--primary);
             text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 0.5rem;
+            letter-spacing: 0.2em;
+            background: rgba(59, 130, 246, 0.1);
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            border: 1px solid rgba(59, 130, 246, 0.2);
             display: inline-block;
-        }
-
-        .slide h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            letter-spacing: -0.04em;
-            line-height: 1.1;
-            background: linear-gradient(135deg, #fff 30%, var(--text-secondary) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
 
         .slide h2 {
             font-size: 2.25rem;
-            font-weight: 700;
-            letter-spacing: -0.02em;
-            margin-bottom: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
             color: #fff;
+            margin-top: 0.5rem;
         }
 
         .slide-body {
             flex-grow: 1;
             display: flex;
             gap: 3rem;
-            align-items: center;
+            align-items: stretch;
+            min-height: 0; /* Important for flex child scrolling */
         }
 
         .slide-content-left {
             flex: 1.2;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 1.5rem;
         }
 
         .slide-content-right {
             flex: 0.8;
             display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        /* Lists and bullets */
-        ul.slide-list {
-            list-style: none;
-            display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            justify-content: center;
+            align-items: stretch;
+            gap: 1rem;
         }
 
-        ul.slide-list li {
-            font-size: 1.25rem;
-            color: var(--text-secondary);
+        /* Grid Lists */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.25rem;
+        }
+
+        .info-card {
+            background: rgba(255, 255, 255, 0.01);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
             display: flex;
-            align-items: flex-start;
             gap: 1rem;
+            align-items: flex-start;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            border-color: rgba(59, 130, 246, 0.3);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .info-card i {
+            font-size: 1.25rem;
+            color: var(--primary);
+            margin-top: 0.2rem;
+        }
+
+        .info-card-text h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.25rem;
+        }
+
+        .info-card-text p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
             line-height: 1.4;
         }
 
-        ul.slide-list li strong {
-            color: #fff;
-        }
-
-        ul.slide-list li i {
-            margin-top: 0.25rem;
-            color: var(--primary);
-        }
-
-        /* Visual components */
+        /* Right Panel Glass Cards */
         .glass-panel {
             background: rgba(255, 255, 255, 0.02);
             border: 1px solid var(--border-color);
             border-radius: 16px;
-            padding: 2rem;
-            width: 100%;
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.02);
-        }
-
-        .glow-box {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
-        }
-
-        .glow-box::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border-radius: 16px;
-            border: 2px solid transparent;
-            background: linear-gradient(135deg, var(--primary), var(--accent)) border-box;
-            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: destination-out;
-            mask-composite: exclude;
-            pointer-events: none;
+            padding: 1.75rem;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01);
         }
 
         code {
             font-family: var(--font-mono);
             background-color: rgba(255, 255, 255, 0.05);
-            padding: 0.2rem 0.5rem;
+            padding: 0.15rem 0.4rem;
             border-radius: 4px;
-            font-size: 0.95em;
+            font-size: 0.85em;
             color: var(--accent);
         }
 
-        .code-block {
-            display: block;
-            font-family: var(--font-mono);
-            background-color: #121214;
-            border: 1px solid var(--border-color);
-            padding: 1.25rem;
-            border-radius: 12px;
-            color: #f4f4f5;
-            font-size: 0.9rem;
-            line-height: 1.5;
-            overflow-x: auto;
-            margin-top: 1rem;
+        /* Comparison Table */
+        .comp-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
         }
 
-        .code-block span.comment { color: #71717a; }
-        .code-block span.cmd { color: var(--primary); }
+        .comp-table th {
+            text-align: left;
+            padding: 0.75rem;
+            border-bottom: 2px solid var(--border-color);
+            color: #fff;
+            font-weight: 600;
+        }
 
-        /* Stepper roadmap */
-        .stepper-flow {
+        .comp-table td {
+            padding: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        .comp-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Code snippets */
+        .code-snippet {
+            font-family: var(--font-mono);
+            background-color: #0e0e11;
+            border: 1px solid var(--border-color);
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            color: #f4f4f5;
+            font-size: 0.8rem;
+            line-height: 1.4;
+            overflow-y: auto;
+            max-height: 250px;
+        }
+
+        /* Visual Steps */
+        .vertical-steps {
             display: flex;
             flex-direction: column;
-            gap: 1.25rem;
-            width: 100%;
-        }
-
-        .step-item {
-            display: flex;
-            align-items: center;
             gap: 1rem;
-            background: rgba(255, 255, 255, 0.01);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 0.75rem 1rem;
         }
 
-        .step-num {
-            width: 24px;
-            height: 24px;
+        .v-step {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .v-step-circle {
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
-            background-color: var(--primary);
-            color: #fff;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 700;
+        }
+
+        .v-step-text {
+            font-size: 0.875rem;
+            font-weight: 500;
         }
 
         /* Controls Footer */
         .deck-footer {
-            height: 80px;
+            height: 70px;
             border-top: 1px solid var(--border-color);
             padding: 0 3rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(9, 9, 11, 0.8);
-            backdrop-filter: blur(10px);
+            background-color: rgba(9, 9, 11, 0.9);
             z-index: 10;
         }
 
         .controls {
             display: flex;
             gap: 1rem;
+            align-items: center;
         }
 
         .control-btn {
             background: none;
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            width: 40px;
-            height: 40px;
+            width: 36px;
+            height: 36px;
             border-radius: 50%;
             cursor: pointer;
             display: flex;
@@ -302,12 +328,12 @@
         }
 
         .slide-counter {
-            font-size: 0.875rem;
+            font-size: 0.8rem;
             color: var(--text-secondary);
             font-family: var(--font-mono);
+            margin-right: 0.5rem;
         }
 
-        /* Brand logo */
         .brand-watermark {
             display: flex;
             align-items: center;
@@ -317,24 +343,44 @@
 
         .brand-watermark span { color: var(--primary); }
 
-        /* Title slide layout */
-        .slide-title-view {
+        /* Cover Slide */
+        .cover-content {
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             text-align: center;
+            height: 100%;
         }
 
-        .slide-title-view h1 {
-            font-size: 5rem;
+        .cover-content h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            letter-spacing: -0.05em;
             margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff 40%, var(--text-secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .slide-title-view p.subtitle {
-            font-size: 1.5rem;
+        .cover-content p {
+            font-size: 1.35rem;
             color: var(--text-secondary);
-            max-width: 600px;
+            max-width: 650px;
+            margin-bottom: 3rem;
             line-height: 1.4;
-            margin-bottom: 2.5rem;
+        }
+
+        .cover-badge {
+            background: rgba(139, 92, 246, 0.1);
+            color: var(--accent);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
         }
     </style>
 </head>
@@ -342,206 +388,277 @@
     
     <div class="deck-container">
         
-        <!-- Slide 1: Title -->
-        <div class="slide slide-title-view active" id="slide-1">
-            <span class="slide-tag">E2E Sourcing Pipeline</span>
-            <h1>job-search<span>.ai</span></h1>
-            <p class="subtitle">An automated, keyless, local agent pipeline to re-engineer your application funnel.</p>
-            <div class="glass-panel" style="max-width: 500px; padding: 1.25rem;">
-                <code style="color:#fff; font-size: 1.1rem;">job-search ui</code>
+        <!-- Slide 1: Cover -->
+        <div class="slide active" id="slide-1" style="justify-content: center;">
+            <div class="cover-content">
+                <span class="cover-badge">Job Sourcing Re-Engineered</span>
+                <h1>job-search<span>.ai</span></h1>
+                <p>An automated, keyless, local agent pipeline to eliminate manual application overhead.</p>
+                <div class="glass-panel" style="display:inline-block; padding: 1rem 2rem;">
+                    <span style="font-family: var(--font-mono); color: #fff; font-size: 1.1rem;"><i class="fa-solid fa-terminal" style="color:var(--primary); margin-right: 0.5rem;"></i> claude /job</span>
+                </div>
             </div>
         </div>
 
-        <!-- Slide 2: The LinkedIn Loop -->
+        <!-- Slide 2: LinkedIn Optimization -->
         <div class="slide" id="slide-2">
             <div class="slide-header">
-                <span class="slide-tag">Top of Funnel</span>
-                <h2>1. The LinkedIn Profile Loop</h2>
+                <div>
+                    <span class="slide-tag">Inbound Presence</span>
+                    <h2>1. LinkedIn Profile Optimization</h2>
+                </div>
+                <i class="fa-brands fa-linkedin" style="font-size: 2.5rem; color: #0a66c2;"></i>
             </div>
             <div class="slide-body">
                 <div class="slide-content-left">
-                    <ul class="slide-list">
-                        <li>
-                            <i class="fa-solid fa-arrow-trend-up"></i>
-                            <div>
-                                <strong>Search Ranking Priority:</strong> Recruiters source directly using keyword queries. Optimization is about index ranking, not just visual format.
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                            <div class="info-card-text">
+                                <h3>Recruiter Index Optimization</h3>
+                                <p>Sourcers source candidates directly using LinkedIn Recruiter keywords. Your profile is search real estate—optimize for search indices, not just visual design.</p>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-pen-nib"></i>
-                            <div>
-                                <strong>Headline Formula:</strong> Replace generic titles with value propositions: <br>
-                                <code>Role | Tech stack | Quantifiable Accomplishments</code>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-signature"></i>
+                            <div class="info-card-text">
+                                <h3>Headline Indexing Formula</h3>
+                                <p>Avoid generic titles like 'Engineer at X'. Use the indexing formula: <br>
+                                <code>Role Title | Core Stack Keywords | Quantifiable Value Proposition</code></p>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-user-check"></i>
-                            <div>
-                                <strong>Profile Sourcing Hacks:</strong> Pin top 3 endorsed keywords, claim custom URL footprints, and flag 'Open to Work' in recruiter-only mode.
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i>
+                            <div class="info-card-text">
+                                <h3>3 Sourcing Hacks</h3>
+                                <p>1. Enable 'Open to Work' in Recruiter-Only mode. <br>
+                                2. Pin your top 3 target skills (endorsements rank higher in search filters). <br>
+                                3. Set a clean, short custom URL path.</p>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="slide-content-right">
-                    <div class="glass-panel glow-box">
-                        <h4 style="margin-bottom:1rem; color:var(--primary);"><i class="fa-solid fa-comments"></i> In-App Skill</h4>
-                        <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:1rem;">Call direct outreach and bio summarizers inside your console:</p>
+                    <div class="glass-panel" style="border-left: 4px solid var(--primary);">
+                        <h4 style="color:#fff; margin-bottom: 0.75rem;"><i class="fa-solid fa-shield-halved"></i> LinkedIn Skill Block</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                            Direct outreach message drafts and summary builders are compiled locally from your workspace:
+                        </p>
                         <code style="display:block; text-align:center;">/job-linkedin summary</code>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: E2E Terminal Automation -->
+        <!-- Slide 3: CLI Skill Suite -->
         <div class="slide" id="slide-3">
             <div class="slide-header">
-                <span class="slide-tag">Local Agent Engine</span>
-                <h2>2. E2E CLI & Claude Code Skills</h2>
+                <div>
+                    <span class="slide-tag">E2E Automation</span>
+                    <h2>2. The Local CLI Orchestrator</h2>
+                </div>
+                <i class="fa-solid fa-terminal" style="font-size: 2.25rem; color: var(--success);"></i>
             </div>
             <div class="slide-body">
                 <div class="slide-content-left">
-                    <ul class="slide-list">
-                        <li>
-                            <i class="fa-solid fa-circle-check"></i>
-                            <div>
-                                <strong>Conversational Build:</strong> AI interview dynamically extracts experiences using STAR/XYZ metrics to generate base schema files.
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-comments"></i>
+                            <div class="info-card-text">
+                                <h3>Dynamic Interview Chat</h3>
+                                <p>Conducts a conversational AI interview, using Google STAR/XYZ metrics to extract achievements and write `profile.json`.</p>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-circle-check"></i>
-                            <div>
-                                <strong>Parallel Board Scans:</strong> Greenhouse & Lever boards parsed concurrently to score matching positions.
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-network-wired"></i>
+                            <div class="info-card-text">
+                                <h3>Parallel API Board Scanning</h3>
+                                <p>Concurrently queries Greenhouse/Lever boards, matching roles to profile qualifications using a single, low-latency batched prompt.</p>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-circle-check"></i>
-                            <div>
-                                <strong>LaTeX Compilation:</strong> Custom LaTeX resume bullet tailored to JD keywords and compiled instantly using <code>tectonic</code>.
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <div class="info-card-text">
+                                <h3>Tectonic XeLaTeX Compilation</h3>
+                                <p>Customizes resume bullets for job description keywords and compiles a professional PDF locally using Tectonic compiler.</p>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
                 </div>
                 <div class="slide-content-right">
-                    <div class="stepper-flow">
-                        <div class="step-item"><div class="step-num">1</div><p style="font-size:0.85rem;"><b>/job build</b> (Conversational Bio)</p></div>
-                        <div class="step-item"><div class="step-num">2</div><p style="font-size:0.85rem;"><b>/job scan</b> (Parallel API parser)</p></div>
-                        <div class="step-item"><div class="step-num">3</div><p style="font-size:0.85rem;"><b>/job resume & cover</b> (Tectonic compile)</p></div>
+                    <div class="vertical-steps">
+                        <h4 style="color:#fff; margin-bottom: 0.5rem;">Pipeline Command Flow</h4>
+                        <div class="v-step">
+                            <div class="v-step-circle">1</div>
+                            <span class="v-step-text"><code>/job build</code> (Conversational Bio)</span>
+                        </div>
+                        <div class="v-step">
+                            <div class="v-step-circle">2</div>
+                            <span class="v-step-text"><code>/job discover</code> (Company Sourcing)</span>
+                        </div>
+                        <div class="v-step">
+                            <div class="v-step-circle">3</div>
+                            <span class="v-step-text"><code>/job scan</code> (Parallel API match)</span>
+                        </div>
+                        <div class="v-step">
+                            <div class="v-step-circle">4</div>
+                            <span class="v-step-text"><code>/job resume & cover</code> (PDF compile)</span>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 4: Content vs Form -->
+        <!-- Slide 4: Simplify vs Content -->
         <div class="slide" id="slide-4">
             <div class="slide-header">
-                <span class="slide-tag">Synergy Strategy</span>
-                <h2>3. Content Tailoring vs. Form Autofills</h2>
+                <div>
+                    <span class="slide-tag">Synergy Overview</span>
+                    <h2>3. Autofill Extensions vs. Content Tailoring</h2>
+                </div>
+                <i class="fa-solid fa-shuffle" style="font-size: 2.25rem; color: var(--accent);"></i>
             </div>
             <div class="slide-body">
                 <div class="slide-content-left">
-                    <ul class="slide-list">
-                        <li>
-                            <i class="fa-solid fa-list-check"></i>
-                            <div>
-                                <strong>Form Autofills (e.g. Simplify):</strong> Automates portal text fields (name, phone, demographics, work histories).
+                    <table class="comp-table">
+                        <thead>
+                            <tr>
+                                <th>Feature</th>
+                                <th>Autofill Extensions (e.g. Simplify)</th>
+                                <th>Content Tailoring (job-search)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Focus Area</strong></td>
+                                <td>Form inputs (Name, Email, History fields)</td>
+                                <td>Deep qualifications tailoring</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Document Assembly</strong></td>
+                                <td>Uploads a static, pre-existing PDF resume</td>
+                                <td>Rewrites bullets per JD and compiles custom XeLaTeX PDF</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Interactive Prompts</strong></td>
+                                <td>None</td>
+                                <td>Conversational STAR/XYZ interviewer</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Integration</strong></td>
+                                <td colspan="2" style="text-align: center; color: var(--success); background: rgba(16, 185, 129, 0.05); font-weight: 600;">
+                                    Perfect Synergy: job-search compiles tailored PDF -> Simplify auto-fills & uploads
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="slide-content-right">
+                    <div class="glass-panel" style="border-left: 4px solid var(--accent);">
+                        <h4 style="color:#fff; margin-bottom: 0.5rem;"><i class="fa-solid fa-code-fork"></i> Browser Filling</h4>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                            To complete the pipeline, Playwright Headed browser filler navigates to the application, auto-fills inputs, uploads the tailored PDF, and pauses for review:
+                        </p>
+                        <code>/job apply &lt;job-url&gt;</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Helper Web Prompts -->
+        <div class="slide" id="slide-5">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Universal Accessibility</span>
+                    <h2>4. Helper Web Prompts (No-CLI Users)</h2>
+                </div>
+                <i class="fa-solid fa-copy" style="font-size: 2.25rem; color: var(--primary);"></i>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-circle-nodes"></i>
+                            <div class="info-card-text">
+                                <h3>Universal Compatibility</h3>
+                                <p>No command line configuration required. Use ChatGPT, Claude, or Copilot web interfaces directly with standard templates.</p>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-magic"></i>
-                            <div>
-                                <strong>Content Tailoring (job-search):</strong> Customizes experience bullets to match JD keywords, builds cover letters, compiles PDFs.
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-file-invoice"></i>
+                            <div class="info-card-text">
+                                <h3>Experience Rewriter Prompt</h3>
+                                <p>Injects job description text and base profile into web interfaces, instructing the LLM to output custom markdown achievements.</p>
                             </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-handshake"></i>
-                            <div>
-                                <strong>The Perfect Integration:</strong> Our tool structures the content and compiles customized resumes -> Autofill extensions load and submit.
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-paper-plane"></i>
+                            <div class="info-card-text">
+                                <h3>Template Location</h3>
+                                <p>Fully documented templates for resume tailoring, cover letter writing, and recruiter cold outreach are saved at <code>docs/WEB_PROMPTS.md</code>.</p>
                             </div>
-                        </li>
-                    </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-content-right">
+                    <div class="code-snippet">
+<span class="comment"># Excerpt from docs/WEB_PROMPTS.md</span>
+You are an expert resume writer. Help me tailor my resume experience section...
+
+Here is my current profile:
+&lt;PASTE PROFILE&gt;
+
+Here is the target JD:
+&lt;PASTE JD&gt;
+
+Instructions:
+1. Rewrite bullet points using Google's XYZ formula...
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Apollo Sourcing & Outreach -->
+        <div class="slide" id="slide-6">
+            <div class="slide-header">
+                <div>
+                    <span class="slide-tag">Outbound Execution</span>
+                    <h2>5. Apollo Sourcing & Cold Outreach</h2>
+                </div>
+                <i class="fa-solid fa-paper-plane" style="font-size: 2.25rem; color: var(--primary);"></i>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-search-dollar"></i>
+                            <div class="info-card-text">
+                                <h3>Apollo.io Chrome Extension</h3>
+                                <p>Extract direct company email addresses and phone numbers of recruiters and engineering managers directly from LinkedIn company profiles.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <div class="info-card-text">
+                                <h3>Recruiter Outreach Strategy</h3>
+                                <p>Bypass job portals. Send a short, highly tailored cold email referencing that you applied and attaching the customized PDF compiled by your CLI tool.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-mobile-screen-button"></i>
+                            <div class="info-card-text">
+                                <h3>Short Connection Note</h3>
+                                <p>Send connection request notes under 300 characters to peer engineers to build rapport and discover internal referrals.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="slide-content-right">
                     <div class="glass-panel" style="border-left: 4px solid var(--success);">
-                        <h4 style="margin-bottom:0.5rem; color:#fff;">Form Automation</h4>
-                        <p style="font-size:0.85rem; color:var(--text-secondary); margin-bottom:1.5rem;">Playwright headed browser automation triggers dynamically:</p>
-                        <code>/job apply &lt;url&gt;</code>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5: Sourcing & Outreach -->
-        <div class="slide" id="slide-5">
-            <div class="slide-header">
-                <span class="slide-tag">Recruiter Outbound</span>
-                <h2>4. Apollo Sourcing & Cold Outreach</h2>
-            </div>
-            <div class="slide-body">
-                <div class="slide-content-left">
-                    <ul class="slide-list">
-                        <li>
-                            <i class="fa-solid fa-magnifying-glass-plus"></i>
-                            <div>
-                                <strong>Apollo.io Sourcing:</strong> Extract recruiter and hiring manager emails and direct phone numbers straight from company LinkedIn listings.
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-paper-plane"></i>
-                            <div>
-                                <strong>Targeted Messaging:</strong> Send personalized emails referencing the application and attaching the tailored resume.
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-bolt"></i>
-                            <div>
-                                <strong>Outreach Generator:</strong> Run command tools to write connection notes and cold emails matching recruiter metrics.
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="slide-content-right">
-                    <div class="glass-panel glow-box">
-                        <h4 style="margin-bottom:0.75rem; color:var(--accent);"><i class="fa-solid fa-envelope"></i> Command Example</h4>
-                        <code style="display:block; text-align:center; font-size:0.8rem;">/job-linkedin outreach stripe "SWE"</code>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 6: No-Code Helpers -->
-        <div class="slide" id="slide-6">
-            <div class="slide-header">
-                <span class="slide-tag">Web Assistants</span>
-                <h2>5. No-CLI Helper Web Prompts</h2>
-            </div>
-            <div class="slide-body">
-                <div class="slide-content-left">
-                    <ul class="slide-list">
-                        <li>
-                            <i class="fa-solid fa-window-restore"></i>
-                            <div>
-                                <strong>Standard Web UIs:</strong> Use ChatGPT, Claude, or Copilot web interfaces directly.
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-copy"></i>
-                            <div>
-                                <strong>Prompt Templates:</strong> Pre-formatted templates inside <code>docs/WEB_PROMPTS.md</code>.
-                            </div>
-                        </li>
-                        <li>
-                            <i class="fa-solid fa-shield-halved"></i>
-                            <div>
-                                <strong>Secure Metrics formatting:</strong> Prompts enforce Google STAR/XYZ structures and keyword matching safely in markdown blocks.
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="slide-content-right">
-                    <div class="glass-panel" style="text-align:center;">
-                        <i class="fa-solid fa-terminal" style="font-size:2.5rem; color:var(--primary); margin-bottom:1rem;"></i>
-                        <p style="font-size:0.9rem; font-weight:600;">No setup needed</p>
-                        <p style="font-size:0.8rem; color:var(--text-secondary);">Copy prompts from docs/WEB_PROMPTS.md</p>
+                        <h4 style="color:#fff; margin-bottom: 0.5rem;"><i class="fa-solid fa-envelope"></i> Cold Email Draft</h4>
+                        <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
+                            <i>"Hi [Name], I recently applied for [Role]. I led the rewrite of [System] which cut response times by 30%—aligning directly with your requirement for [Skill]. Resumed attached. Best, [Name]"</i>
+                        </p>
                     </div>
                 </div>
             </div>
