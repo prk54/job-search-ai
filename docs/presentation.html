@@ -8,14 +8,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #09090b;
-            --bg-card: rgba(20, 20, 23, 0.7);
-            --border-color: #27272a;
-            --text-primary: #f4f4f5;
-            --text-secondary: #a1a1aa;
-            --primary: #3b82f6;
-            --accent: #8b5cf6;
-            --success: #10b981;
+            --bg-main: #f8fafc;
+            --bg-card: rgba(255, 255, 255, 0.9);
+            --border-color: #e2e8f0;
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --primary: #2563eb;
+            --accent: #7c3aed;
+            --success: #059669;
             --font-sans: 'Outfit', sans-serif;
             --font-mono: 'JetBrains Mono', monospace;
             --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
@@ -36,8 +36,8 @@
             display: flex;
             flex-direction: column;
             background-image: 
-                radial-gradient(at 0% 0%, rgba(59, 130, 246, 0.06) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(139, 92, 246, 0.06) 0px, transparent 50%);
+                radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(124, 58, 237, 0.05) 0px, transparent 50%);
         }
 
         /* Slide Container */
@@ -64,7 +64,7 @@
             flex-direction: column;
             justify-content: space-between;
             backdrop-filter: blur(20px);
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.08);
             opacity: 0;
             transform: scale(0.95) translateY(30px);
             pointer-events: none;
@@ -87,7 +87,7 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid var(--border-color);
             padding-bottom: 1.5rem;
             margin-bottom: 1.5rem;
         }
@@ -98,10 +98,10 @@
             color: var(--primary);
             text-transform: uppercase;
             letter-spacing: 0.2em;
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(37, 99, 235, 0.08);
             padding: 0.35rem 0.75rem;
             border-radius: 50px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
+            border: 1px solid rgba(37, 99, 235, 0.15);
             display: inline-block;
         }
 
@@ -109,7 +109,7 @@
             font-size: 2.25rem;
             font-weight: 800;
             letter-spacing: -0.03em;
-            color: #fff;
+            color: var(--text-primary);
             margin-top: 0.5rem;
         }
 
@@ -118,7 +118,7 @@
             display: flex;
             gap: 3rem;
             align-items: stretch;
-            min-height: 0; /* Important for flex child scrolling */
+            min-height: 0;
         }
 
         .slide-content-left {
@@ -146,7 +146,7 @@
         }
 
         .info-card {
-            background: rgba(255, 255, 255, 0.01);
+            background: rgba(255, 255, 255, 0.5);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 1.25rem;
@@ -154,11 +154,14 @@
             gap: 1rem;
             align-items: flex-start;
             transition: var(--transition);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px -1px rgba(0, 0, 0, 0.01);
         }
 
         .info-card:hover {
-            border-color: rgba(59, 130, 246, 0.3);
-            background: rgba(255, 255, 255, 0.02);
+            border-color: rgba(37, 99, 235, 0.4);
+            background: #fff;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02);
         }
 
         .info-card i {
@@ -170,7 +173,7 @@
         .info-card-text h3 {
             font-size: 1.1rem;
             font-weight: 600;
-            color: #fff;
+            color: var(--text-primary);
             margin-bottom: 0.25rem;
         }
 
@@ -182,20 +185,21 @@
 
         /* Right Panel Glass Cards */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
+            background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 1.75rem;
-            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.01);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.03);
         }
 
         code {
             font-family: var(--font-mono);
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(124, 58, 237, 0.08);
             padding: 0.15rem 0.4rem;
             border-radius: 4px;
             font-size: 0.85em;
             color: var(--accent);
+            border: 1px solid rgba(124, 58, 237, 0.15);
         }
 
         /* Comparison Table */
@@ -210,8 +214,8 @@
             text-align: left;
             padding: 0.75rem;
             border-bottom: 2px solid var(--border-color);
-            color: #fff;
-            font-weight: 600;
+            color: var(--text-primary);
+            font-weight: 700;
         }
 
         .comp-table td {
@@ -227,11 +231,11 @@
         /* Code snippets */
         .code-snippet {
             font-family: var(--font-mono);
-            background-color: #0e0e11;
-            border: 1px solid var(--border-color);
+            background-color: #0f172a;
+            border: 1px solid #1e293b;
             padding: 1rem 1.25rem;
             border-radius: 10px;
-            color: #f4f4f5;
+            color: #f8fafc;
             font-size: 0.8rem;
             line-height: 1.4;
             overflow-y: auto;
@@ -255,7 +259,7 @@
             width: 28px;
             height: 28px;
             border-radius: 50%;
-            background: rgba(59, 130, 246, 0.1);
+            background: rgba(37, 99, 235, 0.08);
             border: 1px solid var(--primary);
             color: var(--primary);
             display: flex;
@@ -267,7 +271,7 @@
 
         .v-step-text {
             font-size: 0.875rem;
-            font-weight: 500;
+            font-weight: 600;
         }
 
         /* Controls Footer */
@@ -278,7 +282,7 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: rgba(9, 9, 11, 0.9);
+            background-color: rgba(255, 255, 255, 0.95);
             z-index: 10;
         }
 
@@ -303,7 +307,7 @@
         }
 
         .control-btn:hover {
-            background-color: rgba(255, 255, 255, 0.05);
+            background-color: rgba(0, 0, 0, 0.03);
             border-color: var(--text-secondary);
         }
 
@@ -357,7 +361,7 @@
             font-weight: 800;
             letter-spacing: -0.05em;
             margin-bottom: 1.5rem;
-            background: linear-gradient(135deg, #fff 40%, var(--text-secondary) 100%);
+            background: linear-gradient(135deg, var(--text-primary) 40%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
@@ -371,9 +375,9 @@
         }
 
         .cover-badge {
-            background: rgba(139, 92, 246, 0.1);
+            background: rgba(124, 58, 237, 0.08);
             color: var(--accent);
-            border: 1px solid rgba(139, 92, 246, 0.2);
+            border: 1px solid rgba(124, 58, 237, 0.15);
             padding: 0.4rem 1rem;
             border-radius: 50px;
             font-size: 0.85rem;
@@ -395,7 +399,7 @@
                 <h1>job-search<span>.ai</span></h1>
                 <p>An automated, keyless, local agent pipeline to eliminate manual application overhead.</p>
                 <div class="glass-panel" style="display:inline-block; padding: 1rem 2rem;">
-                    <span style="font-family: var(--font-mono); color: #fff; font-size: 1.1rem;"><i class="fa-solid fa-terminal" style="color:var(--primary); margin-right: 0.5rem;"></i> claude /job</span>
+                    <span style="font-family: var(--font-mono); color: var(--text-primary); font-size: 1.1rem;"><i class="fa-solid fa-terminal" style="color:var(--primary); margin-right: 0.5rem;"></i> claude /job</span>
                 </div>
             </div>
         </div>
@@ -440,7 +444,7 @@
                 </div>
                 <div class="slide-content-right">
                     <div class="glass-panel" style="border-left: 4px solid var(--primary);">
-                        <h4 style="color:#fff; margin-bottom: 0.75rem;"><i class="fa-solid fa-shield-halved"></i> LinkedIn Skill Block</h4>
+                        <h4 style="color:var(--text-primary); margin-bottom: 0.75rem;"><i class="fa-solid fa-shield-halved"></i> LinkedIn Skill Block</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
                             Direct outreach message drafts and summary builders are compiled locally from your workspace:
                         </p>
@@ -487,7 +491,7 @@
                 </div>
                 <div class="slide-content-right">
                     <div class="vertical-steps">
-                        <h4 style="color:#fff; margin-bottom: 0.5rem;">Pipeline Command Flow</h4>
+                        <h4 style="color:var(--text-primary); margin-bottom: 0.5rem;">Pipeline Command Flow</h4>
                         <div class="v-step">
                             <div class="v-step-circle">1</div>
                             <span class="v-step-text"><code>/job build</code> (Conversational Bio)</span>
@@ -546,7 +550,7 @@
                             </tr>
                             <tr>
                                 <td><strong>Integration</strong></td>
-                                <td colspan="2" style="text-align: center; color: var(--success); background: rgba(16, 185, 129, 0.05); font-weight: 600;">
+                                <td colspan="2" style="text-align: center; color: var(--success); background: rgba(5, 150, 105, 0.08); border: 1px solid rgba(5, 150, 105, 0.15); border-radius: 8px; font-weight: 600;">
                                     Perfect Synergy: job-search compiles tailored PDF -> Simplify auto-fills & uploads
                                 </td>
                             </tr>
@@ -555,7 +559,7 @@
                 </div>
                 <div class="slide-content-right">
                     <div class="glass-panel" style="border-left: 4px solid var(--accent);">
-                        <h4 style="color:#fff; margin-bottom: 0.5rem;"><i class="fa-solid fa-code-fork"></i> Browser Filling</h4>
+                        <h4 style="color:var(--text-primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-code-fork"></i> Browser Filling</h4>
                         <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 1.25rem;">
                             To complete the pipeline, Playwright Headed browser filler navigates to the application, auto-fills inputs, uploads the tailored PDF, and pauses for review:
                         </p>
@@ -655,7 +659,7 @@ Instructions:
                 </div>
                 <div class="slide-content-right">
                     <div class="glass-panel" style="border-left: 4px solid var(--success);">
-                        <h4 style="color:#fff; margin-bottom: 0.5rem;"><i class="fa-solid fa-envelope"></i> Cold Email Draft</h4>
+                        <h4 style="color:var(--text-primary); margin-bottom: 0.5rem;"><i class="fa-solid fa-envelope"></i> Cold Email Draft</h4>
                         <p style="font-size: 0.8rem; color: var(--text-secondary); line-height: 1.4;">
                             <i>"Hi [Name], I recently applied for [Role]. I led the rewrite of [System] which cut response times by 30%—aligning directly with your requirement for [Skill]. Resumed attached. Best, [Name]"</i>
                         </p>
@@ -721,12 +725,6 @@ Instructions:
         function nextSlide() {
             if (activeIdx < slides.length - 1) {
                 showSlide(activeIdx + 1);
-            }
-        }
-
-        function prevSlide() {
-            if (activeIdx > 0) {
-                showSlide(activeIdx - 1);
             }
         }
 
