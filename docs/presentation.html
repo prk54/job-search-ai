@@ -667,6 +667,10 @@
                             <div class="v-step-circle">4</div>
                             <span class="v-step-text"><code>/job resume & cover</code> (PDF compile)</span>
                         </div>
+                        <div class="v-step">
+                            <div class="v-step-circle">5</div>
+                            <span class="v-step-text"><code>/job-interview</code> (Interactive Practice)</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -728,12 +732,61 @@
             </div>
         </div>
 
-        <!-- Slide 8: Web Prompts -->
+        <!-- Slide 8: Mock Interview Practice -->
         <div class="slide" id="slide-8">
             <div class="slide-header">
                 <div>
+                    <span class="slide-tag">Interview Readiness</span>
+                    <h2>7. Interactive Mock Interview Practice</h2>
+                </div>
+                <i class="fa-solid fa-comments-dollar" style="font-size: 2.25rem; color: var(--accent);"></i>
+            </div>
+            <div class="slide-body">
+                <div class="slide-content-left" style="flex: 1.2;">
+                    <div class="info-grid">
+                        <div class="info-card">
+                            <i class="fa-solid fa-user-tie"></i>
+                            <div class="info-card-text">
+                                <h3>Company-Specific Simulation</h3>
+                                <p>Simulate realistic behavioral, coding, or system design interviews tailored specifically to companies like Stripe, Google, or Airbnb.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-graduation-cap"></i>
+                            <div class="info-card-text">
+                                <h3>Real-Time STAR Feedback</h3>
+                                <p>The assistant checks your answer structure, highlights missing metrics, and provides a polished, high-impact model answer instantly.</p>
+                            </div>
+                        </div>
+                        <div class="info-card">
+                            <i class="fa-solid fa-square-poll-vertical"></i>
+                            <div class="info-card-text">
+                                <h3>Readiness Score & Logs</h3>
+                                <p>Scores your performance out of 10 and compiles a comprehensive evaluation report saved directly to your local outputs: <br>
+                                <code>~/.job-search/output/interview_feedback.md</code></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="slide-content-right" style="flex: 0.8; display: flex; justify-content: center; align-items: center;">
+                    <div class="glass-panel text-center" style="border-left: 4px solid var(--accent); text-align: center; width: 100%;">
+                        <i class="fa-solid fa-comments" style="font-size: 3rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h4 style="color:var(--text-primary); margin-bottom: 0.5rem;">Interactive Command</h4>
+                        <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.4; margin-bottom: 1rem;">
+                            Start a mock interview session for a specific company and role directly:
+                        </p>
+                        <code>/job-interview Stripe Backend</code>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Web Prompts -->
+        <div class="slide" id="slide-9">
+            <div class="slide-header">
+                <div>
                     <span class="slide-tag">Universal Accessibility</span>
-                    <h2>7. Prompt Templates (For Web AI Chat)</h2>
+                    <h2>8. Prompt Templates (For Web AI Chat)</h2>
                 </div>
                 <i class="fa-solid fa-copy" style="font-size: 2.25rem; color: var(--primary);"></i>
             </div>
@@ -781,12 +834,12 @@ Instructions:
             </div>
         </div>
 
-        <!-- Slide 9: Apollo Sourcing & Outreach -->
-        <div class="slide" id="slide-9">
+        <!-- Slide 10: Apollo Sourcing & Outreach -->
+        <div class="slide" id="slide-10">
             <div class="slide-header">
                 <div>
                     <span class="slide-tag">Outbound Execution</span>
-                    <h2>8. Apollo Sourcing & Cold Outreach</h2>
+                    <h2>9. Apollo Sourcing & Cold Outreach</h2>
                 </div>
                 <i class="fa-solid fa-paper-plane" style="font-size: 2.25rem; color: var(--primary);"></i>
             </div>
@@ -840,7 +893,7 @@ Instructions:
         </div>
 
         <div class="controls">
-            <div class="slide-counter" id="counter-display">1 / 9</div>
+            <div class="slide-counter" id="counter-display">1 / 10</div>
             <button class="control-btn" id="prev-btn" onclick="prevSlide()"><i class="fa-solid fa-chevron-left"></i></button>
             <button class="control-btn" id="next-btn" onclick="nextSlide()"><i class="fa-solid fa-chevron-right"></i></button>
         </div>

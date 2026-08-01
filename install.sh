@@ -70,7 +70,7 @@ mkdir -p "$SKILLS_DIR"
 AGY_SKILLS_DIR="$HOME/.gemini/antigravity-cli/skills"
 mkdir -p "$AGY_SKILLS_DIR"
 
-for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply job-discover job-linkedin; do
+for skill in job job-build job-profile job-scan job-resume job-intel job-audit job-cover job-apply job-discover job-linkedin job-interview; do
   src="$SCRIPT_DIR/skills/${skill}.md"
   
   # Claude Code destination

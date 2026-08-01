@@ -88,7 +88,17 @@ open ~/.job-search/output/resume_airbnb.pdf
 
 ---
 
-## 📨 Step 7: Draft Recruiter Cold Outreach
+## 💬 Step 7: Interactive Mock Interview Practice
+*Simulate a company-specific, step-by-step mock interview in your terminal shell.*
+
+**In the `yolo` shell:**
+```text
+/job-interview Stripe Backend
+```
+
+---
+
+## 📨 Step 8: Draft Recruiter Cold Outreach
 *Generate a personalized email and connection note matching your qualifications.*
 
 **In the `yolo` shell:**
